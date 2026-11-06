@@ -1,9 +1,9 @@
-import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import useAuth from './useAuth';
-import { addToCart } from '../features/cart/cartSlice';
-import { toggleWishlist } from '../features/auth/authSlice';
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import useAuth from "./useAuth";
+import { addToCart } from "../features/cart/cartSlice";
+import { toggleWishlist } from "../features/auth/authSlice";
 
 // Cart and wishlist actions that send guests to the sign-in page first.
 export default function useShop() {
@@ -13,8 +13,8 @@ export default function useShop() {
   const { user } = useAuth();
 
   const needSignIn = () => {
-    toast('Sign in to continue');
-    navigate('/login', { state: { from: location.pathname } });
+    toast("Sign in to continue");
+    navigate("/login", { state: { from: location.pathname } });
   };
 
   const add = async (perfume, qty = 1) => {
@@ -28,7 +28,12 @@ export default function useShop() {
     if (!user) return needSignIn();
     const res = await dispatch(toggleWishlist(perfume._id));
     if (res.error) toast.error(res.payload);
-    else toast.success(res.payload.added ? 'Saved to your wishlist' : 'Removed from your wishlist');
+    else
+      toast.success(
+        res.payload.added
+          ? "Saved to your wishlist"
+          : "Removed from your wishlist",
+      );
   };
 
   return { add, wish, isWished: (id) => !!user?.wishlist?.includes(id) };

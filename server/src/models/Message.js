@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
@@ -8,6 +8,6 @@ const messageSchema = new mongoose.Schema(
     message: { type: String, required: true, trim: true, maxlength: 2000 },
     read: { type: Boolean, default: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
-export default mongoose.model('Message', messageSchema);
+export default mongoose.model("Message", messageSchema);
