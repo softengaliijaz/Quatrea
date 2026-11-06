@@ -24,6 +24,12 @@ export const loginRules = [
     .normalizeEmail(),
   body("password").notEmpty().withMessage("Password is required"),
 ];
+export const resetPasswordRules = [
+  body("token").notEmpty().withMessage("Reset token is required"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
+];
 export const profileRules = [
   body("name").optional().trim().notEmpty().withMessage("Name cannot be empty"),
   body("phone").optional().trim(),

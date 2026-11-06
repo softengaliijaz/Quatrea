@@ -18,14 +18,18 @@ export default function Login() {
     },
     [dispatch],
   );
-  if (user) return <Navigate to={state?.from || "/"} replace />;
+  const destination = state?.from || (user?.role === "admin" ? "/admin" : "/");
+  if (user) return <Navigate to={destination} replace />;
 
   const submit = async (e) => {
     e.preventDefault();
     const res = await dispatch(loginUser(form));
     if (!res.error) {
       toast.success(`Welcome back, ${res.payload.user.name.split(" ")[0]}`);
-      navigate(state?.from || "/", { replace: true });
+      navigate(
+        state?.from || (res.payload.user.role === "admin" ? "/admin" : "/"),
+        { replace: true },
+      );
     }
   };
 
@@ -33,6 +37,11 @@ export default function Login() {
     <section className="page container auth">
       <form onSubmit={submit} className="card form">
         <h1 className="h2">Sign in</h1>
+        {state?.message && (
+          <p className="success" role="status">
+            {state.message}
+          </p>
+        )}
         {error && (
           <p className="alert" role="alert">
             {error}
@@ -57,6 +66,11 @@ export default function Login() {
         <button className="btn" disabled={status === "loading"}>
           {status === "loading" ? "Signing in…" : "Sign in"}
         </button>
+        <p className="muted small">
+          <Link to="/forgot-password" className="link">
+            Forgot your password?
+          </Link>
+        </p>
         <p className="muted small">
           New to Quatréa?{" "}
           <Link to="/register" state={state} className="link">

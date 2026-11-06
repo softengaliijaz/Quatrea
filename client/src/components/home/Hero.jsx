@@ -43,7 +43,8 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1, duration: 0.8 }}
         >
-          Four seasons, four fragrances. Scroll to walk through the year.
+          Four seasonal originals, with more fragrances to discover. Scroll to
+          walk through the year.
         </motion.p>
       </motion.div>
 

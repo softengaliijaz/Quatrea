@@ -23,3 +23,11 @@ export const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000,
   path: "/api/auth",
 };
+
+export const issueTokens = async (user, res) => {
+  const refresh = signRefreshToken(user);
+  user.refreshToken = hashToken(refresh);
+  await user.save({ validateBeforeSave: false });
+  res.cookie(REFRESH_COOKIE, refresh, cookieOptions);
+  return signAccessToken(user);
+};

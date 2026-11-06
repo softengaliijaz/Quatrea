@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Field from "../ui/Field";
@@ -34,9 +34,20 @@ export default function AdminPerfumes() {
   const dispatch = useDispatch();
   const items = useSelector((s) => s.perfumes.items);
   const [form, setForm] = useState(null);
+  const [search, setSearch] = useState("");
   useEffect(() => {
     dispatch(fetchPerfumes({ limit: 50 }));
   }, [dispatch]);
+  const visibleItems = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return query
+      ? items.filter((p) =>
+          [p.name, p.season, p.tagline].some((value) =>
+            value.toLowerCase().includes(query),
+          ),
+        )
+      : items;
+  }, [items, search]);
   const set = (k) => (e) =>
     setForm({
       ...form,
@@ -84,12 +95,22 @@ export default function AdminPerfumes() {
 
   return (
     <>
-      <div className="bar">
+      <div className="bar admin-bar">
         <h2 className="h3">Fragrances</h2>
         <button className="btn btn-sm" onClick={() => setForm(BLANK)}>
           New fragrance
         </button>
       </div>
+      <label className="field admin-search">
+        <span>Search fragrances</span>
+        <input
+          className="input"
+          type="search"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder="Name, season, or tagline"
+        />
+      </label>
       {form && (
         <form onSubmit={save} className="card form admin-form">
           <h3 className="h3">
@@ -205,7 +226,7 @@ export default function AdminPerfumes() {
             </tr>
           </thead>
           <tbody>
-            {items.map((p) => (
+            {visibleItems.map((p) => (
               <tr key={p._id}>
                 <td data-label="Name">{p.name}</td>
                 <td data-label="Season">{p.season}</td>
@@ -222,6 +243,13 @@ export default function AdminPerfumes() {
                 </td>
               </tr>
             ))}
+            {!visibleItems.length && (
+              <tr>
+                <td colSpan="6" className="muted">
+                  No fragrances match this search.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -10,6 +10,14 @@ export const loginUser = makeThunk(
   "auth/login",
   async (body) => (await api.post("/auth/login", body)).data,
 );
+export const requestPasswordReset = makeThunk(
+  "auth/forgotPassword",
+  async (body) => (await api.post("/auth/forgot-password", body)).data,
+);
+export const resetPassword = makeThunk(
+  "auth/resetPassword",
+  async (body) => (await api.post("/auth/reset-password", body)).data,
+);
 export const logoutUser = makeThunk(
   "auth/logout",
   async () => (await api.post("/auth/logout")).data,
@@ -123,8 +131,9 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.rejected, rejected)
       .addCase(changePassword.pending, pending)
-      .addCase(changePassword.fulfilled, (s) => {
+      .addCase(changePassword.fulfilled, (s, a) => {
         s.status = "succeeded";
+        if (a.payload.accessToken) s.accessToken = a.payload.accessToken;
       })
       .addCase(changePassword.rejected, rejected)
       .addCase(fetchWishlist.fulfilled, (s, a) => {

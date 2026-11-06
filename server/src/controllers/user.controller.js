@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import Perfume from "../models/Perfume.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { issueTokens } from "../utils/token.js";
 
 // PUT /api/users/me
 export const updateProfile = asyncHandler(async (req, res) => {
@@ -18,8 +19,8 @@ export const changePassword = asyncHandler(async (req, res) => {
   if (!(await user.matchPassword(req.body.currentPassword)))
     throw new ApiError(400, "Current password is incorrect");
   user.password = req.body.newPassword;
-  await user.save();
-  res.json({ success: true, message: "Password updated" });
+  const accessToken = await issueTokens(user, res);
+  res.json({ success: true, message: "Password updated", accessToken });
 });
 
 // GET /api/users/me/wishlist

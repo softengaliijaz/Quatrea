@@ -10,6 +10,22 @@ const env = {
   refreshSecret: process.env.JWT_REFRESH_SECRET || "dev_refresh_secret",
   accessExpires: process.env.ACCESS_EXPIRES || "15m",
   refreshExpires: process.env.REFRESH_EXPIRES || "7d",
+  smtpHost: process.env.SMTP_HOST || "",
+  smtpPort: Number(process.env.SMTP_PORT || 587),
+  smtpSecure: process.env.SMTP_SECURE === "true",
+  smtpUser: process.env.SMTP_USER || "",
+  smtpPass: process.env.SMTP_PASS || "",
+  mailFrom: process.env.MAIL_FROM || "",
 };
 env.isProd = env.nodeEnv === "production";
+if (
+  env.isProd &&
+  [env.accessSecret, env.refreshSecret].some(
+    (secret) => secret.length < 32 || secret.startsWith("dev_"),
+  )
+) {
+  throw new Error(
+    "JWT_ACCESS_SECRET and JWT_REFRESH_SECRET must each be at least 32 characters in production",
+  );
+}
 export default env;

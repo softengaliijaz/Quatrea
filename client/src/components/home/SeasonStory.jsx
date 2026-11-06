@@ -79,10 +79,10 @@ export default function SeasonStory() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={season.key}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.45 }}
+                exit={{ opacity: 0, y: -18 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 <p className="story-season">{season.name}</p>
                 <h2 className="story-title">{season.headline}</h2>

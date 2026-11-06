@@ -32,8 +32,8 @@ export default function Collection() {
       <header className="page-head">
         <h1 className="h1">The collection</h1>
         <p className="muted lead">
-          Four fragrances, each one written for a single season. Wear one, or
-          follow the year.
+          Four seasonal originals anchor a growing collection of scents. Find
+          your moment, or follow the year.
         </p>
       </header>
 

@@ -1,22 +1,33 @@
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 import env from "../config/env.js";
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import {
-  signAccessToken,
-  signRefreshToken,
   hashToken,
+  issueTokens,
   REFRESH_COOKIE,
   cookieOptions,
 } from "../utils/token.js";
 
-const issueTokens = async (user, res) => {
-  const refresh = signRefreshToken(user);
-  user.refreshToken = hashToken(refresh);
-  await user.save({ validateBeforeSave: false });
-  res.cookie(REFRESH_COOKIE, refresh, cookieOptions);
-  return signAccessToken(user);
+const sendPasswordResetEmail = async (email, token) => {
+  const transporter = nodemailer.createTransport({
+    host: env.smtpHost,
+    port: env.smtpPort,
+    secure: env.smtpSecure,
+    auth: env.smtpUser
+      ? { user: env.smtpUser, pass: env.smtpPass }
+      : undefined,
+  });
+  const resetUrl = `${env.clientUrl.split(",")[0]}/reset-password/${token}`;
+  await transporter.sendMail({
+    from: env.mailFrom || env.smtpUser,
+    to: email,
+    subject: "Reset your Quatréa password",
+    text: `Use this link to reset your password within 15 minutes:\n\n${resetUrl}\n\nIf you did not request this, you can ignore this email.`,
+  });
 };
 
 // POST /api/auth/register
@@ -71,4 +82,49 @@ export const logout = asyncHandler(async (req, res) => {
 // GET /api/auth/me
 export const me = asyncHandler(async (req, res) => {
   res.json({ success: true, user: req.user.toPublic() });
+});
+
+// POST /api/auth/forgot-password
+export const forgotPassword = asyncHandler(async (req, res) => {
+  if (!env.smtpHost || !env.mailFrom)
+    throw new ApiError(503, "Password reset email is not configured");
+
+  const user = await User.findOne({ email: req.body.email });
+  if (user) {
+    const token = crypto.randomBytes(32).toString("hex");
+    user.resetPasswordToken = hashToken(token);
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+    await user.save({ validateBeforeSave: false });
+    try {
+      await sendPasswordResetEmail(user.email, token);
+    } catch (error) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+      console.error("Password reset email delivery failed:", error);
+    }
+  }
+  res.json({
+    success: true,
+    message: "If the account exists, password reset instructions have been sent.",
+  });
+});
+
+// POST /api/auth/reset-password
+export const resetPassword = asyncHandler(async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: hashToken(req.body.token),
+    resetPasswordExpires: { $gt: new Date() },
+  }).select(
+    "+password +refreshToken +resetPasswordToken +resetPasswordExpires",
+  );
+  if (!user) throw new ApiError(400, "Reset link is invalid or has expired");
+
+  user.password = req.body.password;
+  user.refreshToken = undefined;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+  res.clearCookie(REFRESH_COOKIE, { ...cookieOptions, maxAge: undefined });
+  res.json({ success: true, message: "Password updated. Please sign in." });
 });

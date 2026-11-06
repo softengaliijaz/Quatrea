@@ -318,6 +318,13 @@ textarea.input {
   padding: 0.7rem 1rem;
   margin: 0;
 }
+.success {
+  background: color-mix(in srgb, var(--spring) 18%, transparent);
+  color: color-mix(in srgb, var(--spring) 70%, var(--ink));
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin: 0;
+}
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -663,6 +670,10 @@ textarea.input {
   align-items: center;
   position: relative;
   z-index: 2;
+  padding-left: clamp(5.5rem, 9vw, 8rem);
+}
+.story-copy {
+  min-width: 0;
 }
 .story-season {
   font: italic 500 1.6rem var(--font-display);
@@ -671,6 +682,7 @@ textarea.input {
 }
 .story-title {
   font-size: clamp(2.2rem, 5.4vw, 4.6rem);
+  text-wrap: balance;
 }
 .story-text {
   font-size: 1.12rem;
@@ -702,7 +714,7 @@ textarea.input {
 }
 .story-rail {
   position: absolute;
-  left: clamp(0.6rem, 2vw, 2rem);
+  left: clamp(1rem, 2.5vw, 2.5rem);
   top: 50%;
   transform: translateY(-50%);
   list-style: none;
@@ -1239,6 +1251,8 @@ address {
   display: flex;
   gap: 0.4rem;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
   margin: 1.5rem 0 2rem;
   border-bottom: 1px solid var(--line);
 }
@@ -1284,6 +1298,14 @@ address {
 }
 .admin-form {
   margin-bottom: 2rem;
+}
+.admin-bar {
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.admin-search {
+  max-width: 420px;
+  margin-bottom: 1rem;
 }
 .table-wrap {
   overflow-x: auto;
@@ -1345,6 +1367,9 @@ address {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
+  .craft-line {
+    transform: none !important;
+  }
   .nav-burger {
     display: inline-grid;
   }
@@ -1387,6 +1412,7 @@ address {
   .story-grid {
     gap: 0;
     align-content: center;
+    padding-left: 0;
   }
   .story-art {
     order: -1;

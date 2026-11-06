@@ -31,7 +31,7 @@ You need Node 18+ and MongoDB (local, or a free Atlas cluster).
 cd server
 cp .env.example .env          # set MONGO_URI and two long random JWT secrets
 npm install
-npm run seed                  # creates the 4 perfumes, an admin and a demo user
+npm run seed                  # adds 12 perfumes, an admin and a demo user without clearing data
 npm run dev                   # http://localhost:5000
 
 # 2. Website (new terminal)
@@ -41,6 +41,7 @@ npm run dev                   # http://localhost:5173  (proxies /api to the serv
 ```
 
 Seeded accounts: `admin@quatrea.com / Admin@12345` and `demo@quatrea.com / Demo@12345`.
+The seed command is additive and idempotent: it does not delete existing users, orders, carts, or reviews. Existing seed accounts are left unchanged.
 
 ## Authentication and authorization
 
@@ -49,12 +50,14 @@ Seeded accounts: `admin@quatrea.com / Admin@12345` and `demo@quatrea.com / Demo@
 - The axios interceptor refreshes silently on a 401 and retries the request; the session is restored on page load.
 - `protect` checks the token, `authorize('admin')` restricts routes by role. The client mirrors this with `ProtectedRoute`.
 - Passwords are hashed with bcrypt (12 rounds). Helmet, CORS allow-list, rate limiting on auth, and express-validator on every input.
+- Password reset uses a single-use, hashed token that expires after 15 minutes. Configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, and `MAIL_FROM` to enable delivery. Reset requests return a generic response whether or not an account exists.
+- Production startup rejects missing or short JWT signing secrets. Use separate random secrets of at least 32 characters.
 
 ## API endpoints (`/api`)
 
 | Area       | Endpoints                                                                                                                                                                          |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Auth       | `POST /auth/register` · `POST /auth/login` · `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me`                                                                           |
+| Auth       | `POST /auth/register` · `POST /auth/login` · `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me` · `POST /auth/forgot-password` · `POST /auth/reset-password` |
 | Users      | `PUT /users/me` · `PUT /users/me/password` · `GET /users/me/wishlist` · `POST /users/me/wishlist/:perfumeId` · admin: `GET /users` · `PATCH /users/:id/role` · `DELETE /users/:id` |
 | Perfumes   | `GET /perfumes` (season, search, sort, price, page) · `GET /perfumes/:slug` · admin: `POST /perfumes` · `PUT /perfumes/:id` · `DELETE /perfumes/:id`                               |
 | Reviews    | `GET /perfumes/:perfumeId/reviews` · `POST /perfumes/:perfumeId/reviews` · `DELETE /reviews/:id`                                                                                   |
@@ -65,6 +68,10 @@ Seeded accounts: `admin@quatrea.com / Admin@12345` and `demo@quatrea.com / Demo@
 | Admin      | `GET /admin/stats`                                                                                                                                                                 |
 
 Card payment is simulated (the order is simply marked paid); wire in Stripe if you take this further.
+
+## API reference
+
+The interactive Swagger UI is available at `/api/docs` and the OpenAPI 3.0 JSON at `/api/openapi.json`. The docs cover public, authenticated, and admin endpoints; authorize with the short-lived Bearer access token for protected calls.
 
 ## Deploying for the live demo link
 
