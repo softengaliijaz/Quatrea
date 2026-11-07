@@ -65,7 +65,7 @@ select:disabled {
 }
 
 .icon-btn {
-  @apply relative inline-grid h-10 w-10 cursor-pointer place-items-center rounded-full border-0 bg-transparent text-ink transition-colors duration-200;
+  @apply relative inline-grid h-10 w-10 cursor-pointer place-items-center rounded-full border-0 bg-transparent text-ink transition-[color,background-color,transform] duration-200;
 }
 
 .input {

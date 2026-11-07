@@ -14,6 +14,155 @@
   border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
 }
 
+.btn,
+.icon-btn,
+.chip,
+.wish,
+.gift-option,
+.store-row,
+.nav-more summary,
+.nav-more-menu a,
+.footer a,
+.atlas-fragrances a {
+  transition-timing-function: var(--ease);
+}
+
+.nav-more[open] .nav-more-menu {
+  transform-origin: top right;
+  animation: menu-arrive 220ms var(--ease) both;
+}
+
+.btn:active:not(:disabled),
+.icon-btn:active,
+.chip:active,
+.gift-option:active,
+.store-row:active {
+  transform: scale(0.975);
+}
+
+.input,
+.nav,
+.hero-wash,
+.story-sticky,
+.pcard,
+.strip-card,
+.journal-entry,
+.store-row,
+.atlas-pin-dot,
+.gift-option,
+.atelier-step,
+.footer a {
+  transition-timing-function: var(--ease);
+}
+
+.motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 650ms var(--ease),
+    transform 700ms var(--ease);
+  transition-delay: var(--motion-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.motion-reveal.motion-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.pcard-art svg,
+.gift-perfume svg,
+.hero-bottle svg {
+  transition:
+    transform 650ms var(--ease),
+    filter 650ms var(--ease);
+}
+
+.wish.on svg {
+  animation: wish-pop 360ms var(--ease);
+}
+
+.hero-wash {
+  animation: scene-breathe 9s ease-in-out infinite alternate;
+}
+
+.lab-light {
+  animation: light-breathe 8s ease-in-out infinite alternate;
+}
+
+.atlas-map-lines {
+  animation: map-drift 32s linear infinite;
+}
+
+.journal-article-art::before {
+  animation: ring-breathe 8s ease-in-out infinite alternate;
+}
+
+.order-orbit {
+  animation: orbit-turn 42s linear infinite;
+}
+
+@keyframes menu-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes wish-pop {
+  50% { transform: scale(1.3); }
+}
+
+@keyframes scene-breathe {
+  from { opacity: 0.76; }
+  to { opacity: 1; }
+}
+
+@keyframes light-breathe {
+  from { scale: 0.96; opacity: 0.62; }
+  to { scale: 1.04; opacity: 1; }
+}
+
+@keyframes map-drift {
+  to { background-position: 80px 80px; }
+}
+
+@keyframes ring-breathe {
+  from { scale: 0.96; opacity: 0.65; }
+  to { scale: 1.04; opacity: 1; }
+}
+
+@keyframes orbit-turn {
+  to { rotate: 360deg; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover {
+    scale: 1.08;
+  }
+
+  .gift-option:hover,
+  .store-row:hover {
+    transform: translateY(-2px);
+  }
+
+  .footer a:hover,
+  .nav-more-menu a:hover,
+  .atlas-fragrances a:hover {
+    translate: 3px 0;
+  }
+
+  .pcard:hover .pcard-art svg,
+  .gift-perfume:hover svg {
+    transform: translateY(-6px);
+  }
+}
+
 .hero-wash {
   background:
     radial-gradient(
@@ -220,5 +369,19 @@
 
   .intro-bloom {
     display: none;
+  }
+
+  .motion-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-wash,
+  .lab-light,
+  .atlas-map-lines,
+  .journal-article-art::before,
+  .order-orbit {
+    animation: none;
   }
 }

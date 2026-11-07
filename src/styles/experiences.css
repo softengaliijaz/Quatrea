@@ -24,7 +24,7 @@
 }
 
 .nav-more-menu a {
-  @apply rounded-[8px] px-3 py-2 text-[0.9rem] text-muted transition-colors;
+  @apply rounded-[8px] px-3 py-2 text-[0.9rem] text-muted transition-[color,background-color,translate];
 }
 
 .nav-more-menu a.active {
@@ -912,7 +912,7 @@
 }
 
 .store-row {
-  @apply flex min-h-[70px] items-center gap-4 border-b border-line bg-transparent text-left;
+  @apply flex min-h-[70px] items-center gap-4 border-b border-line bg-transparent text-left transition-[transform,border-color];
 }
 
 .store-row-index {
