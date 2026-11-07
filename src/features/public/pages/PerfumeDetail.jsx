@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import Bottle from "../../../components/ui/Bottle";
 import Icon from "../../../components/ui/Icon";
+import Stars from "../../../components/ui/Stars";
 import { Empty } from "../../../components/ui/Loader";
 import useShop from "../../../hooks/useShop";
 import { perfumeBySlug } from "../../../data/perfumes";
@@ -24,20 +25,20 @@ export default function PerfumeDetail() {
 
   if (!p)
     return (
-      <section className="page container">
+      <main className="page container">
         <Empty title="Fragrance not found">
           It may have been retired.{" "}
           <Link to="/collection" className="link">
             Back to the collection
           </Link>
         </Empty>
-      </section>
+      </main>
     );
   const color = p.accent || seasonByKey[p.season]?.color;
   const wished = isWished(p._id);
 
   return (
-    <section className="detail" style={{ "--season": color }}>
+    <main className="detail" data-season={p.season} style={{ "--season": color }}>
       <div className="container detail-grid">
         <div className="detail-art">
           <div className="story-halo" aria-hidden="true" />
@@ -115,9 +116,30 @@ export default function PerfumeDetail() {
         </div>
       </div>
       <p className="container detail-note muted small">
-        Product details are part of this local, frontend-only concept. Reviews
-        and checkout are not connected to a service.
+        Product details are part of this local, frontend-only concept.
       </p>
-    </section>
+      <section className="detail-reviews container" aria-labelledby="reviews-title">
+        <div className="detail-reviews-heading">
+          <div>
+            <p className="hero-kicker">A note from someone who wears it</p>
+            <h2 id="reviews-title">Worn, then remembered.</h2>
+          </div>
+          <div className="detail-rating">
+            <Stars value={p.ratingAvg} />
+            <strong>{p.ratingAvg.toFixed(1)}</strong>
+            <span className="muted small">Illustrative sample reviews</span>
+          </div>
+        </div>
+        <div className="detail-review-grid">
+          {p.reviews.map((review) => (
+            <blockquote key={`${review.author}-${review.title}`} className="detail-review">
+              <Stars value={review.rating} size={13} />
+              <p>“{review.body}”</p>
+              <footer><strong>{review.author}</strong><span>{review.title}</span></footer>
+            </blockquote>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }

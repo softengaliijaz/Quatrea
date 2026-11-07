@@ -5,13 +5,16 @@ const initialItems = () => {
   try {
     const saved = JSON.parse(localStorage.getItem("qt-bag") || "[]");
     if (!Array.isArray(saved)) return [];
-    return saved.flatMap(({ id, qty }) => {
+    return saved.flatMap((entry) => {
+      if (!entry || typeof entry !== "object") return [];
+      const { id, qty } = entry;
       const perfume = PERFUMES.find((item) => item._id === id);
       return perfume && Number.isInteger(qty) && qty > 0
         ? [{ perfume, qty: Math.min(qty, 10) }]
         : [];
     });
-  } catch {
+  } catch (error) {
+    console.warn("Could not read the saved bag on this device.", error);
     return [];
   }
 };
@@ -22,7 +25,8 @@ const initialWishlist = () => {
     return Array.isArray(saved)
       ? saved.filter((id) => PERFUMES.some((item) => item._id === id))
       : [];
-  } catch {
+  } catch (error) {
+    console.warn("Could not read the saved wishlist on this device.", error);
     return [];
   }
 };

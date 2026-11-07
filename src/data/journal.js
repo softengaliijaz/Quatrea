@@ -1,0 +1,58 @@
+export const JOURNAL = [
+  {
+    slug: "the-first-spray",
+    category: "On wearing",
+    title: "Give a fragrance ten minutes.",
+    dek: "The first breath is only the beginning. Here is why the quiet part matters.",
+    readTime: "3 min read",
+    date: "Notes from the atelier",
+    quote: "A scent is not a photograph. It changes while you are living in it.",
+    body: [
+      "The first spray is the loudest hello. Citrus lifts, green notes catch the air, and for a moment the fragrance belongs to the room as much as it belongs to you.",
+      "Give it a little time. The bright opening begins to settle; the heart notes come forward, then the softer base finds the warmth of your skin. What remains an hour later is often the part you will remember tomorrow.",
+      "Try a fragrance on skin, not on a paper strip alone. Wear it through an ordinary afternoon. Notice when you reach for your wrist without thinking. That small gesture tells you more than a first impression ever could.",
+    ],
+  },
+  {
+    slug: "a-garden-in-april",
+    category: "Field notes",
+    title: "A garden in April, just after rain.",
+    dek: "Following the green notes from the first wet leaf to the last white petal.",
+    readTime: "4 min read",
+    date: "Spring, in the field",
+    quote: "The air after rain is not one smell. It is the whole garden answering at once.",
+    body: [
+      "There is a particular brightness to a garden after a spring shower. The stones are dark, the leaves hold small mirrors of water, and something sweet has opened while nobody was looking.",
+      "For Éclosion, we started with green tea and pear blossom: one clean and slightly dry, the other airy and petal-soft. Peony gives the middle its color. A little cedar keeps it from floating away.",
+      "It is not a portrait of a flower. It is the feeling of opening the window and finding the day has begun without you.",
+    ],
+  },
+  {
+    slug: "what-the-notes-mean",
+    category: "The craft",
+    title: "Top, heart, base: three ways a scent says hello.",
+    dek: "A simple guide to the changing shape of a perfume on skin.",
+    readTime: "5 min read",
+    date: "From the blending table",
+    quote: "The notes are not a list. They are a conversation over time.",
+    body: [
+      "Perfumers often describe a composition in three layers. The top is what you notice first; the heart is the character that unfolds; the base is the lasting impression left close to the skin.",
+      "These layers are a useful way to talk about a fragrance, not a strict clock. Temperature, skin and the way you wear a scent all change how quickly it moves from one impression to another.",
+      "If you are choosing between two perfumes, pay attention to the whole conversation. The note that first catches your attention may not be the one you want to live with all day.",
+    ],
+  },
+  {
+    slug: "the-long-way-round",
+    category: "At the atelier",
+    title: "Why we take the long way round.",
+    dek: "Small batches, patient trials and the value of leaving a blend alone.",
+    readTime: "4 min read",
+    date: "An atelier note",
+    quote: "Sometimes the best thing a perfumer can do is close the bottle and wait.",
+    body: [
+      "A formula can look balanced on paper and still feel unfinished on skin. We make a small trial, let it rest, and come back to it with a little distance.",
+      "That pause is not a romantic flourish. Materials settle into one another. A bright opening may soften; a base may become more present. Time tells us whether a blend has a shape of its own.",
+      "When it does, we make it again, carefully. We would rather release a little later than hurry a fragrance past the moment it becomes itself.",
+    ],
+  },
+];

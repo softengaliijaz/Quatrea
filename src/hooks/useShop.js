@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import {
   addToCart,
   toggleWishlist,
 } from "../features/cart/cartSlice";
+import {
+  openCartDrawer,
+  showToast,
+} from "../features/ui/uiSlice";
 
 export default function useShop() {
   const dispatch = useDispatch();
@@ -11,14 +14,17 @@ export default function useShop() {
 
   const add = (perfume, qty = 1) => {
     dispatch(addToCart({ perfume, qty }));
-    toast.success(`${perfume.name} is in your bag`);
+    dispatch(showToast(`${perfume.name} is in your bag`));
+    dispatch(openCartDrawer());
   };
 
   const wish = (perfume) => {
     const saved = wishlist.includes(perfume._id);
     dispatch(toggleWishlist(perfume._id));
-    toast.success(
-      saved ? "Removed from your saved fragrances" : "Saved for later",
+    dispatch(
+      showToast(
+        saved ? "Removed from your saved fragrances" : "Saved for later",
+      ),
     );
   };
 

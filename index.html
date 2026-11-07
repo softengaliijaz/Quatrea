@@ -20,13 +20,17 @@
     <title>Quatréa — A year, bottled four ways</title>
     <script>
       try {
+        var savedTheme = localStorage.getItem("qt-theme");
         var t =
-          localStorage.getItem("qt-theme") ||
-          (matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
+          savedTheme === "light" || savedTheme === "dark"
+            ? savedTheme
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
         document.documentElement.dataset.theme = t;
-      } catch (e) {}
+      } catch (e) {
+        console.warn("Could not load the saved color theme.", e);
+      }
     </script>
   </head>
   <body>

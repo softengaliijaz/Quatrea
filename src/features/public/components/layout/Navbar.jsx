@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Icon from "../../../../components/ui/Icon";
@@ -8,18 +8,23 @@ import { selectCartCount } from "../../../../features/cart/cartSlice";
 const LINKS = [
   { to: "/", label: "Home", end: true },
   { to: "/collection", label: "Collection" },
-  { to: "/about", label: "The House" },
-  { to: "/contact", label: "Contact" },
+  { to: "/discover", label: "Find your scent" },
+  { to: "/journal", label: "Journal" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
   const { mode, toggle } = useTheme();
   const count = useSelector(selectCartCount);
+  const savedCount = useSelector((state) => state.cart.wishlist.length);
   const { pathname } = useLocation();
 
   useEffect(() => {
     setOpen(false);
+    for (const menu of navRef.current?.querySelectorAll("details") || []) {
+      menu.open = false;
+    }
   }, [pathname]);
 
   return (
@@ -35,12 +40,24 @@ export default function Navbar() {
           <span>Quatréa</span>
         </Link>
 
-        <nav className={`nav-links ${open ? "open" : ""}`} aria-label="Main">
+        <nav ref={navRef} className={`nav-links ${open ? "open" : ""}`} aria-label="Main">
           {LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} end={l.end}>
               {l.label}
             </NavLink>
           ))}
+          <details className="nav-more">
+            <summary>Explore <span aria-hidden="true">⌄</span></summary>
+            <div className="nav-more-menu">
+              <NavLink to="/lab">Layering lab</NavLink>
+              <NavLink to="/atlas">Notes atlas</NavLink>
+              <NavLink to="/atelier">The atelier</NavLink>
+              <NavLink to="/gifts">Gift finder</NavLink>
+              <NavLink to="/stores">Our places</NavLink>
+              <NavLink to="/about">The house</NavLink>
+              <NavLink to="/contact">Write to us</NavLink>
+            </div>
+          </details>
         </nav>
 
         <div className="nav-actions">
@@ -51,6 +68,14 @@ export default function Navbar() {
           >
             <Icon name={mode === "dark" ? "sun" : "moon"} />
           </button>
+          <Link
+            to="/wishlist"
+            className="icon-btn wishlist-btn"
+            aria-label={`Saved fragrances, ${savedCount} items`}
+          >
+            <Icon name="heart" />
+            {savedCount > 0 && <span className="badge-count">{savedCount}</span>}
+          </Link>
           <Link
             to="/cart"
             className="icon-btn cart-btn"

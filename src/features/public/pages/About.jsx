@@ -11,7 +11,7 @@ const reveal = {
 
 export default function About() {
   return (
-    <section className="page container about">
+    <main className="page container about">
       <motion.h1 className="h1 big" {...reveal}>
         A year, bottled four ways.
       </motion.h1>
@@ -63,6 +63,6 @@ export default function About() {
           </p>
         </div>
       </motion.div>
-    </section>
+    </main>
   );
 }

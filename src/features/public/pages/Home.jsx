@@ -3,13 +3,15 @@ import Hero from "../components/home/Hero";
 import SeasonStory from "../components/home/SeasonStory";
 import CollectionStrip from "../components/home/CollectionStrip";
 import Craft from "../components/home/Craft";
+import ScentFinderInvite from "../components/home/ScentFinderInvite";
 
 export default function Home() {
   return (
-    <>
+    <main>
       <Hero />
       <SeasonStory />
       <Craft />
+      <ScentFinderInvite />
       <CollectionStrip />
       <section className="final">
         <div className="container">
@@ -23,6 +25,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-    </>
+    </main>
   );
 }

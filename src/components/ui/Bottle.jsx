@@ -35,8 +35,12 @@ export default function Bottle({
           <stop offset="0" stopColor="var(--pure-white)" stopOpacity=".6" />
           <stop offset=".45" stopColor="var(--pure-white)" stopOpacity="0" />
         </linearGradient>
+        <clipPath id={`b${id}`}>
+          <rect x="12" y="54" width="96" height="158" rx="24" />
+        </clipPath>
       </defs>
       <rect x="44" y="6" width="32" height="32" rx="5" fill="var(--ink)" />
+      <path d="M47 8h26v5H47z" fill="var(--pure-white)" fillOpacity=".18" />
       <rect x="51" y="38" width="18" height="16" fill="var(--line)" />
       <rect
         x="12"
@@ -48,6 +52,12 @@ export default function Bottle({
         stroke="var(--ink)"
         strokeOpacity=".25"
       />
+      <path
+        d="M13 128h94v60a24 24 0 0 1-24 24H37a24 24 0 0 1-24-24z"
+        fill={color}
+        fillOpacity=".14"
+        clipPath={`url(#b${id})`}
+      />
       <rect
         x="12"
         y="54"
@@ -56,6 +66,8 @@ export default function Bottle({
         rx="24"
         fill={`url(#s${id})`}
       />
+      <path d="M22 76v105" stroke="var(--pure-white)" strokeOpacity=".48" strokeWidth="5" strokeLinecap="round" />
+      <path d="M100 78v33" stroke="var(--pure-white)" strokeOpacity=".38" strokeWidth="2" strokeLinecap="round" />
       <rect
         x="28"
         y="108"

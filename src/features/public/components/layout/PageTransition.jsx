@@ -13,7 +13,9 @@ export default function PageTransition({ children }) {
         style={{ originY: 0 }}
         aria-hidden="true"
       />
-      <motion.main
+      <motion.div
+        id="content"
+        tabIndex={-1}
         initial={{ opacity: 0, y: 24 }}
         animate={{
           opacity: 1,
@@ -23,7 +25,7 @@ export default function PageTransition({ children }) {
         exit={{ opacity: 0 }}
       >
         {children}
-      </motion.main>
+      </motion.div>
     </>
   );
 }

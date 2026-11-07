@@ -9,7 +9,9 @@ export default function useTheme() {
     document.documentElement.dataset.theme = mode;
     try {
       localStorage.setItem("qt-theme", mode);
-    } catch {}
+    } catch (error) {
+      console.warn("Could not save the color theme on this device.", error);
+    }
   }, [mode]);
   return { mode, toggle: () => dispatch(toggleTheme()) };
 }

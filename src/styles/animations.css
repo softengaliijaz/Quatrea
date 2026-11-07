@@ -17,25 +17,16 @@
 .hero-wash {
   background:
     radial-gradient(
-      60% 50% at 20% 20%,
-      color-mix(in srgb, var(--spring) 28%, transparent),
-      transparent
+      60% 54% at 48% 48%,
+      color-mix(in srgb, var(--scene, var(--spring)) 31%, transparent),
+      transparent 72%
     ),
     radial-gradient(
-      50% 50% at 85% 25%,
-      color-mix(in srgb, var(--summer) 24%, transparent),
-      transparent
-    ),
-    radial-gradient(
-      60% 50% at 80% 85%,
-      color-mix(in srgb, var(--autumn) 22%, transparent),
-      transparent
-    ),
-    radial-gradient(
-      50% 50% at 15% 85%,
-      color-mix(in srgb, var(--winter) 28%, transparent),
+      70% 55% at 50% 95%,
+      color-mix(in srgb, var(--scene, var(--spring)) 11%, transparent),
       transparent
     );
+  transition: background 0.8s var(--ease);
 }
 
 .story-sticky {
@@ -110,11 +101,50 @@
 }
 
 .detail {
+  position: relative;
+  isolation: isolate;
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--season) 16%, var(--bg)),
     var(--bg) 60%
   );
+}
+
+.detail::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.6;
+  background:
+    radial-gradient(ellipse at 8% 28%, color-mix(in srgb, var(--season) 18%, transparent), transparent 28%),
+    radial-gradient(ellipse at 90% 65%, color-mix(in srgb, var(--season) 14%, transparent), transparent 34%);
+}
+
+.detail[data-season="spring"]::before {
+  background:
+    radial-gradient(ellipse at 12% 20%, color-mix(in srgb, var(--spring) 24%, transparent), transparent 28%),
+    radial-gradient(ellipse at 88% 55%, color-mix(in srgb, var(--spring) 16%, transparent), transparent 35%);
+}
+
+.detail[data-season="summer"]::before {
+  background:
+    conic-gradient(from 220deg at 88% 12%, transparent 0 8%, color-mix(in srgb, var(--summer) 12%, transparent) 9% 12%, transparent 13% 24%, color-mix(in srgb, var(--summer) 10%, transparent) 25% 28%, transparent 29%),
+    radial-gradient(ellipse at 85% 12%, color-mix(in srgb, var(--summer) 22%, transparent), transparent 35%);
+}
+
+.detail[data-season="autumn"]::before {
+  background:
+    radial-gradient(ellipse at 10% 12%, color-mix(in srgb, var(--autumn) 23%, transparent), transparent 32%),
+    radial-gradient(ellipse at 90% 75%, color-mix(in srgb, var(--autumn) 17%, transparent), transparent 40%);
+}
+
+.detail[data-season="winter"]::before {
+  background:
+    radial-gradient(ellipse at 15% 28%, color-mix(in srgb, var(--winter) 24%, transparent), transparent 34%),
+    radial-gradient(ellipse at 86% 20%, color-mix(in srgb, var(--winter) 17%, transparent), transparent 30%),
+    linear-gradient(135deg, transparent 48%, color-mix(in srgb, var(--winter) 5%, transparent) 49%, transparent 50%);
 }
 
 @keyframes pulse {
@@ -170,6 +200,25 @@
   }
 
   .mote {
+    display: none;
+  }
+
+  .story {
+    height: auto;
+  }
+
+  .story-sticky {
+    position: relative;
+    min-height: 100svh;
+    height: auto;
+    padding-block: 4rem;
+  }
+
+  .atelier-line span {
+    transform: scaleY(1) !important;
+  }
+
+  .intro-bloom {
     display: none;
   }
 }

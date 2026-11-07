@@ -843,3 +843,448 @@ address {
     @apply text-[0.85rem];
   }
 }
+
+.finder-invite {
+  @apply my-[clamp(4rem,10vw,8rem)] grid grid-cols-[1fr_0.85fr] items-center gap-[clamp(2rem,7vw,6rem)] overflow-hidden rounded-[28px] border border-line bg-surface px-[clamp(1.5rem,6vw,5rem)] py-[clamp(2.5rem,6vw,5rem)];
+  box-shadow: var(--shadow);
+}
+
+.finder-invite-copy h2 {
+  @apply max-w-[15ch] text-balance;
+}
+
+.finder-invite-copy > p:not(.hero-kicker) {
+  @apply mb-7 max-w-[44ch];
+}
+
+.finder-invite-steps {
+  @apply m-0 grid list-none p-0;
+}
+
+.finder-invite-steps li {
+  @apply relative flex min-h-[92px] items-center gap-5 border-b border-line py-4;
+}
+
+.finder-invite-steps li:last-child {
+  @apply border-b-0;
+}
+
+.finder-invite-number {
+  @apply self-start pt-1 font-body text-[0.72rem] tracking-[0.14em] text-brand;
+}
+
+.finder-invite-step-copy {
+  @apply grid gap-1;
+}
+
+.finder-invite-step-copy strong {
+  @apply font-display text-[1.4rem] font-medium;
+}
+
+.finder-invite-step-copy small {
+  @apply text-[0.88rem] text-muted;
+}
+
+.finder-invite-line {
+  @apply absolute left-[1.15rem] top-[2.4rem] h-[calc(100%-1rem)] w-px bg-line;
+}
+
+.finder-invite-steps li:last-child .finder-invite-line {
+  @apply hidden;
+}
+
+.finder-page {
+  @apply min-h-[85vh] pt-[9.5rem] pb-[5rem];
+}
+
+.finder-intro {
+  @apply mb-10 max-w-[760px] text-center;
+}
+
+.finder-intro .hero-kicker {
+  @apply mb-2;
+}
+
+.finder-intro h1 {
+  @apply mb-3;
+}
+
+.finder-intro h1 em {
+  @apply font-normal text-brand;
+}
+
+.finder-intro .lead {
+  @apply mx-auto;
+}
+
+.finder-shell {
+  @apply grid grid-cols-[0.72fr_1.28fr] overflow-hidden rounded-[26px] border border-line bg-surface;
+  box-shadow: var(--shadow);
+}
+
+.finder-aside {
+  @apply relative flex min-h-[520px] flex-col justify-end overflow-hidden border-r border-line p-[clamp(1.5rem,4vw,3.5rem)];
+  background:
+    radial-gradient(ellipse at 30% 26%, color-mix(in srgb, var(--spring) 19%, transparent), transparent 56%),
+    color-mix(in srgb, var(--brand) 4%, var(--surface));
+}
+
+.finder-orbit {
+  @apply absolute left-1/2 top-[42%] grid aspect-square w-[min(74%,300px)] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-brand/20;
+  background: radial-gradient(circle, color-mix(in srgb, var(--brand) 6%, transparent) 0 42%, transparent 43%);
+}
+
+.finder-orbit::before,
+.finder-orbit::after {
+  @apply absolute aspect-square rounded-full border border-brand/15 content-[""];
+  inset: 12%;
+}
+
+.finder-orbit::after {
+  inset: 25%;
+}
+
+.finder-orbit span {
+  @apply absolute h-3 w-3 rounded-full;
+  background: var(--spring);
+}
+
+.finder-orbit span:nth-child(1) {
+  @apply left-[24%] top-[23%];
+}
+
+.finder-orbit span:nth-child(2) {
+  @apply right-[20%] top-[31%];
+  background: var(--summer);
+}
+
+.finder-orbit span:nth-child(3) {
+  @apply bottom-[22%] left-[28%];
+  background: var(--autumn);
+}
+
+.finder-orbit span:nth-child(4) {
+  @apply bottom-[24%] right-[22%];
+  background: var(--winter);
+}
+
+.finder-aside-label {
+  @apply relative mb-2 font-display text-[1.5rem] italic;
+}
+
+.finder-aside-copy {
+  @apply relative mb-7 max-w-[30ch] text-[0.9rem] text-muted;
+}
+
+.finder-aside-rule {
+  @apply mb-4 h-px w-full bg-line;
+}
+
+.finder-aside-foot {
+  @apply m-0 font-body text-[0.66rem] tracking-[0.14em] text-muted;
+}
+
+.finder-aside-foot span {
+  @apply px-1 text-brand;
+}
+
+.finder-panel {
+  @apply min-w-0 p-[clamp(1.5rem,4.7vw,4rem)];
+}
+
+.finder-progress {
+  @apply flex items-center justify-between gap-4 font-body text-[0.68rem] font-medium tracking-[0.13em] text-muted;
+}
+
+.finder-progress-track {
+  @apply mt-3 mb-8 h-[2px] overflow-hidden bg-line;
+}
+
+.finder-progress-track span {
+  @apply block h-full bg-brand transition-[width] duration-500;
+}
+
+.finder-question-step,
+.finder-result-kicker {
+  @apply mb-2 font-body text-[0.72rem] font-medium tracking-[0.14em] text-brand uppercase;
+}
+
+.finder-question h2 {
+  @apply mb-2 text-[clamp(1.8rem,3.7vw,2.7rem)];
+}
+
+.finder-question > p:not(.finder-question-step) {
+  @apply mb-6 text-[0.94rem];
+}
+
+.finder-options {
+  @apply grid grid-cols-2 gap-3;
+}
+
+.finder-options-five {
+  @apply grid-cols-6;
+}
+
+.finder-options-five .finder-option:nth-child(-n+3) {
+  grid-column: span 2;
+}
+
+.finder-options-five .finder-option:nth-child(n+4) {
+  grid-column: span 3;
+}
+
+.finder-option {
+  @apply flex min-h-[86px] min-w-0 items-center gap-3 rounded-[14px] border border-line bg-bg px-3 py-3 text-left transition-[border-color,background,transform] duration-200;
+}
+
+.finder-option.selected {
+  @apply border-brand bg-brand/5;
+}
+
+.finder-option-mark {
+  @apply grid h-9 w-9 flex-none place-items-center rounded-full border border-line font-body text-[0.7rem] tracking-[0.08em] text-muted;
+}
+
+.finder-option.selected .finder-option-mark {
+  @apply border-brand text-brand;
+}
+
+.finder-option-copy {
+  @apply grid min-w-0 gap-1;
+}
+
+.finder-option-copy strong {
+  @apply text-[0.9rem] font-medium leading-tight;
+}
+
+.finder-option-copy small {
+  @apply text-[0.76rem] leading-snug text-muted;
+}
+
+.finder-option-check {
+  @apply ml-auto grid h-5 w-5 flex-none place-items-center rounded-full bg-brand text-[0.7rem] text-brand-ink;
+}
+
+.finder-controls {
+  @apply mt-7 flex items-center justify-between gap-4;
+}
+
+.finder-back {
+  @apply min-h-11;
+}
+
+.finder-back:disabled {
+  @apply cursor-default opacity-0;
+}
+
+.finder-controls .btn {
+  @apply gap-3;
+}
+
+.finder-result-kicker {
+  @apply mb-4;
+}
+
+.finder-feature {
+  @apply grid grid-cols-[0.85fr_1.15fr] overflow-hidden rounded-[18px] border border-line;
+}
+
+.finder-feature-art {
+  @apply relative flex min-h-[340px] flex-col items-center justify-center overflow-hidden px-3 py-7;
+  background:
+    radial-gradient(ellipse at 50% 47%, color-mix(in srgb, var(--season) 24%, transparent), transparent 64%),
+    color-mix(in srgb, var(--season) 6%, var(--bg));
+}
+
+.finder-feature-art svg {
+  @apply relative z-[1] h-auto max-h-[250px] w-auto;
+  filter: drop-shadow(var(--shadow-bottle));
+}
+
+.finder-feature-season,
+.finder-feature-notes {
+  @apply relative z-[2] text-center font-body text-[0.66rem] tracking-[0.14em] text-muted uppercase;
+}
+
+.finder-feature-notes {
+  @apply mt-1 text-[0.62rem] tracking-[0.08em];
+}
+
+.finder-feature-copy {
+  @apply flex min-w-0 flex-col justify-center p-[clamp(1.25rem,3vw,2.2rem)];
+}
+
+.finder-feature-copy > .small {
+  @apply mb-2;
+}
+
+.finder-feature-copy h2 {
+  @apply mb-1 text-[clamp(1.8rem,3vw,2.5rem)];
+}
+
+.finder-feature-copy > p:not(.finder-pyramid) {
+  @apply mb-3;
+}
+
+.finder-tagline {
+  @apply font-display text-[1.2rem] italic;
+}
+
+.finder-pyramid {
+  @apply mt-2 mb-4 border-t border-line pt-3 text-[0.78rem] leading-[1.9];
+}
+
+.finder-pyramid span {
+  @apply mr-2 text-[0.63rem] tracking-[0.1em] text-muted;
+}
+
+.finder-result-actions {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.finder-result-actions .btn {
+  @apply px-4 py-[0.7rem] text-[0.85rem];
+}
+
+.finder-wish.on {
+  @apply text-danger;
+}
+
+.finder-detail-link {
+  @apply mt-3 self-start text-[0.86rem];
+}
+
+.finder-alternates {
+  @apply mt-6;
+}
+
+.finder-alternates-label {
+  @apply mb-2 font-body text-[0.7rem] tracking-[0.13em] text-muted uppercase;
+}
+
+.finder-alternate {
+  @apply flex min-h-[58px] items-center gap-3 border-t border-line py-2;
+}
+
+.finder-alternate-dot {
+  @apply h-3 w-3 flex-none rounded-full bg-[var(--season)];
+}
+
+.finder-alternate > span:nth-child(2) {
+  @apply grid min-w-0 gap-0.5;
+}
+
+.finder-alternate strong {
+  @apply text-[0.9rem] font-medium;
+}
+
+.finder-alternate small {
+  @apply truncate text-[0.77rem] text-muted;
+}
+
+.finder-alternate > span:last-child {
+  @apply ml-auto text-brand;
+}
+
+.finder-result-footer {
+  @apply mt-5 flex flex-wrap justify-between gap-4 border-t border-line pt-4 text-[0.87rem];
+}
+
+.finder-disclaimer {
+  @apply mt-5 text-center text-[0.82rem] text-muted;
+}
+
+@media (width <= 56.25rem) {
+  .finder-shell {
+    @apply grid-cols-1;
+  }
+
+  .finder-aside {
+    @apply min-h-[220px] border-r-0 border-b p-6;
+  }
+
+  .finder-orbit {
+    @apply left-auto right-8 top-1/2 w-[150px] translate-x-0;
+  }
+
+  .finder-aside-label,
+  .finder-aside-copy,
+  .finder-aside-rule,
+  .finder-aside-foot {
+    @apply max-w-[55%];
+  }
+}
+
+@media (width <= 40rem) {
+  .finder-invite {
+    @apply grid-cols-1 gap-8 rounded-[20px];
+  }
+
+  .finder-invite-copy h2 {
+    @apply max-w-[18ch];
+  }
+
+  .finder-aside {
+    @apply min-h-[190px];
+  }
+
+  .finder-orbit {
+    @apply right-5 w-[120px];
+  }
+
+  .finder-aside-label,
+  .finder-aside-copy,
+  .finder-aside-rule,
+  .finder-aside-foot {
+    @apply max-w-[62%];
+  }
+
+  .finder-panel {
+    @apply p-5;
+  }
+
+  .finder-options,
+  .finder-options-five {
+    @apply grid-cols-1;
+  }
+
+  .finder-options-five .finder-option:nth-child(n) {
+    grid-column: auto;
+  }
+
+  .finder-option {
+    @apply min-h-[72px];
+  }
+
+  .finder-feature {
+    @apply grid-cols-1;
+  }
+
+  .finder-feature-art {
+    @apply min-h-[280px];
+  }
+
+  .finder-feature-copy {
+    @apply p-5;
+  }
+
+  .finder-controls .btn {
+    @apply px-4;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .finder-option:hover {
+    @apply -translate-y-0.5 border-brand/60;
+  }
+
+  .finder-alternate:hover strong {
+    @apply text-brand;
+  }
+}
+
+@media (hover: none) {
+  .finder-option:active {
+    @apply scale-[0.99];
+  }
+}

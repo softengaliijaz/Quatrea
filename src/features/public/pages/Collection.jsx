@@ -34,7 +34,7 @@ export default function Collection() {
   }, [items, season, search, sort, maxPrice]);
 
   return (
-    <section className="page container">
+    <main className="page container">
       <header className="page-head">
         <h1 className="h1">The collection</h1>
         <p className="muted lead">
@@ -119,6 +119,6 @@ export default function Collection() {
           </motion.div>
         ))}
       </motion.div>
-    </section>
+    </main>
   );
 }

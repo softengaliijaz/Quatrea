@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   AnimatePresence,
   motion,
+  useReducedMotion,
   useMotionValueEvent,
   useScroll,
   useTransform,
@@ -21,13 +22,16 @@ const MOTES = Array.from({ length: 16 }, (_, i) => ({
 export default function SeasonStory() {
   const ref = useRef(null);
   const [idx, setIdx] = useState(0);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
-  useMotionValueEvent(scrollYProgress, "change", (v) =>
-    setIdx(Math.min(SEASONS.length - 1, Math.floor(v * SEASONS.length))),
-  );
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (!reduceMotion) {
+      setIdx(Math.min(SEASONS.length - 1, Math.floor(v * SEASONS.length)));
+    }
+  });
   const rotate = useTransform(scrollYProgress, [0, 1], [-10, 10]);
   const bottleY = useTransform(scrollYProgress, [0, 1], [30, -30]);
   const season = SEASONS[idx];
@@ -101,7 +105,7 @@ export default function SeasonStory() {
               </motion.div>
             </AnimatePresence>
           </div>
-          <motion.div className="story-art" style={{ rotate, y: bottleY }}>
+          <motion.div className="story-art" style={{ rotate: reduceMotion ? 0 : rotate, y: reduceMotion ? 0 : bottleY }}>
             <div className="story-halo" aria-hidden="true" />
             <Bottle color={season.color} name={season.perfume} height={440} />
           </motion.div>

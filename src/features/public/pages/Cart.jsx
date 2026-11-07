@@ -18,19 +18,19 @@ export default function Cart() {
 
   if (!items.length) {
     return (
-      <section className="page container">
+      <main className="page container">
         <Empty title="Your bag is taking a quiet moment">
           Choose a fragrance to begin.{" "}
           <Link to="/collection" className="link">
             Browse the collection
           </Link>
         </Empty>
-      </section>
+      </main>
     );
   }
 
   return (
-    <section className="page container">
+    <main className="page container">
       <header className="page-head">
         <h1 className="h1">Your bag</h1>
         <p className="muted lead">
@@ -118,14 +118,14 @@ export default function Cart() {
             </div>
           </dl>
           <p className="muted small">
-            This portfolio experience is a frontend-only concept. Checkout and
-            payment are not available.
+            Checkout is a local demonstration only. No payment is collected.
           </p>
-          <Link to="/collection" className="btn btn-ghost">
-            Continue exploring
+          <Link to="/checkout" className="btn">
+            Continue to checkout
           </Link>
+          <Link to="/collection" className="link">Continue exploring</Link>
         </aside>
       </div>
-    </section>
+    </main>
   );
 }

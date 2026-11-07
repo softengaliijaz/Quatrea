@@ -11,6 +11,7 @@ const perfume = (
   heart,
   base,
   featured = false,
+  review = "A beautiful scent that feels effortless from the first spray to the last.",
 ) => ({
   _id: slug,
   slug,
@@ -24,9 +25,23 @@ const perfume = (
   tagline,
   description,
   featured,
-  ratingAvg: 0,
-  ratingCount: 0,
+  ratingAvg: featured ? 4.9 : 4.8,
+  ratingCount: featured ? 24 : 9,
   notes: { top, heart, base },
+  reviews: [
+    {
+      author: featured ? "A. Martin" : "L. Chen",
+      title: featured ? "It feels like the first day of spring." : "A new favourite.",
+      body: review,
+      rating: 5,
+    },
+    {
+      author: featured ? "S. Laurent" : "M. Rivera",
+      title: "Quietly memorable.",
+      body: "It wears close to the skin, then keeps surprising me as the day goes on.",
+      rating: 5,
+    },
+  ],
 });
 
 export const PERFUMES = [
@@ -43,6 +58,7 @@ export const PERFUMES = [
     ["Peony", "Lily of the valley"],
     ["White musk", "Cedar"],
     true,
+    "I wore it on a rainy walk and caught the pear note every time the wind shifted. Gentle, but it stays with you.",
   ),
   perfume(
     "zenith",
@@ -57,6 +73,7 @@ export const PERFUMES = [
     ["Neroli", "Frangipani"],
     ["Driftwood", "Vanilla"],
     true,
+    "Bright without feeling sharp. It takes me straight back to the coast, even on a grey Monday.",
   ),
   perfume(
     "vendange",
@@ -71,6 +88,7 @@ export const PERFUMES = [
     ["Red grape", "Rose"],
     ["Oud", "Patchouli"],
     true,
+    "The fig and rose soften the woods beautifully. It is the one I reach for when the evening turns cool.",
   ),
   perfume(
     "givre",
@@ -85,6 +103,7 @@ export const PERFUMES = [
     ["Iris", "Frosted violet"],
     ["Amber", "Sandalwood"],
     true,
+    "A clean, almost icy opening that warms up slowly. The dry-down is the best part.",
   ),
   perfume(
     "matin-clair",

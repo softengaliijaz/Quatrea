@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initial = () => {
   try {
-    return (
-      localStorage.getItem("qt-theme") ||
-      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-    );
-  } catch {
+    const saved = localStorage.getItem("qt-theme");
+    if (saved === "dark" || saved === "light") return saved;
+    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  } catch (error) {
+    console.warn("Could not read the saved color theme.", error);
     return "light";
   }
 };

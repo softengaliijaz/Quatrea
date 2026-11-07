@@ -2,9 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import perfumes from "../features/perfumes/perfumeSlice";
 import cart from "../features/cart/cartSlice";
 import theme from "../features/theme/themeSlice";
+import ui from "../features/ui/uiSlice";
 
 export const store = configureStore({
-  reducer: { perfumes, cart, theme },
+  reducer: { perfumes, cart, theme, ui },
 });
 
 let persistedCart = store.getState().cart;

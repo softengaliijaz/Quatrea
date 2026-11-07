@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const [subscribed, setSubscribed] = useState(false);
   return (
     <footer className="footer">
       <div className="container footer-grid">
@@ -18,6 +20,27 @@ export default function Footer() {
               <Link to="/collection">The collection</Link>
             </li>
             <li>
+              <Link to="/discover">Find your scent</Link>
+            </li>
+            <li>
+              <Link to="/journal">The journal</Link>
+            </li>
+            <li>
+              <Link to="/lab">Layering lab</Link>
+            </li>
+            <li>
+              <Link to="/atlas">Notes atlas</Link>
+            </li>
+            <li>
+              <Link to="/atelier">The atelier</Link>
+            </li>
+            <li>
+              <Link to="/gifts">Gift finder</Link>
+            </li>
+            <li>
+              <Link to="/stores">Our places</Link>
+            </li>
+            <li>
               <Link to="/about">The house</Link>
             </li>
             <li>
@@ -28,14 +51,18 @@ export default function Footer() {
         <div className="newsletter">
           <h3>Letters from the house</h3>
           <p className="muted">
-            For notes on the next collection, write to us directly.
+            A note when the seasons turn. No noise, just the occasional letter.
           </p>
-          <a
-            className="btn btn-ghost"
-            href="mailto:hello@quatrea.com?subject=Letters%20from%20the%20house"
-          >
-            Write to the house
-          </a>
+          {subscribed ? (
+            <p className="newsletter-success" role="status">You’re on the list for this visit. We don’t collect or store addresses in this demo.</p>
+          ) : (
+            <form className="newsletter-form" onSubmit={(event) => { event.preventDefault(); setSubscribed(true); }}>
+              <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+              <input id="newsletter-email" type="email" name="email" autoComplete="email" placeholder="Your email address" required maxLength={254} />
+              <button type="submit" className="btn btn-ghost">Join the letters <span aria-hidden="true">→</span></button>
+              <small>Demo only. Your address is not sent or saved.</small>
+            </form>
+          )}
         </div>
       </div>
       <div className="container footer-base muted small">
