@@ -1248,7 +1248,9 @@
 }
 
 .hero-scene-picker button {
-  @apply flex min-h-9 items-center gap-2 rounded-full border border-brand bg-brand px-3 text-[0.7rem] text-pure-white transition-[border-color,color];
+  @apply flex min-h-9 items-center gap-2 rounded-full border px-3 text-[0.7rem] text-pure-white transition-[border-color,background-color,transform];
+  border-color: color-mix(in srgb, var(--season) 52%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--season) 52%, var(--contrast-ink));
 }
 
 .hero-scene-picker button i {
@@ -1256,15 +1258,20 @@
 }
 
 .hero-scene-picker button.active {
-  @apply border-summer bg-summer text-pure-white;
+  border-color: color-mix(in srgb, var(--season) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--season) 58%, var(--contrast-ink));
 }
 
 .hero-sound {
-  @apply relative z-[2] mt-1 inline-flex min-h-11 items-center gap-2 rounded-full border-0 bg-brand px-3 text-[0.68rem] text-pure-white transition-colors;
+  @apply relative z-[2] mt-1 inline-flex min-h-11 items-center gap-2 rounded-full border px-3 text-[0.68rem] text-pure-white transition-[border-color,background-color,transform];
+  border-color: color-mix(in srgb, var(--scene) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--scene) 58%, var(--contrast-ink));
 }
 
-.hero-sound.active {
-  @apply bg-summer text-pure-white;
+.hero-cta .btn {
+  border-color: color-mix(in srgb, var(--scene) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--scene) 58%, var(--contrast-ink));
+  color: var(--pure-white);
 }
 
 .intro-bloom {
@@ -1315,8 +1322,11 @@
     @apply scale-150;
   }
 
-  .hero-scene-picker button:hover {
-    @apply border-line text-ink;
+  .hero-scene-picker button:hover,
+  .hero-sound:hover {
+    @apply -translate-y-0.5;
+    border-color: var(--season, var(--scene));
+    color: var(--pure-white);
   }
 }
 
@@ -1530,9 +1540,4 @@
   .store-pin > span {
     transition-duration: 0.01ms;
   }
-}
-
-button:not(.icon-btn):not(.wish):not(.drawer-backdrop),
-button:not(.icon-btn):not(.wish):not(.drawer-backdrop) * {
-  color: var(--pure-white);
 }

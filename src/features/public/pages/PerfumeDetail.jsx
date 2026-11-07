@@ -69,8 +69,8 @@ export default function PerfumeDetail() {
             {LAYERS.map(([key, title, hint], i) => (
               <motion.div
                 key={key}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.12 }}
               >

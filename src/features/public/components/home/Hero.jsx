@@ -133,7 +133,6 @@ export default function Hero() {
             >
               <Link
                 to={`/collection/${s.slug}`}
-                aria-label={`${s.perfume}, the ${s.name.toLowerCase()} fragrance`}
                 className="hero-bottle"
               >
                 <Bottle color={s.color} name={s.perfume} height={HEIGHTS[i]} />

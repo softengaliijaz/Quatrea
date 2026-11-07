@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useScroll, useSpring, motion } from "framer-motion";
 import { JOURNAL } from "../../../data/journal";
@@ -8,11 +7,6 @@ export default function JournalArticle() {
   const article = JOURNAL.find((item) => item.slug === slug);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
-  useEffect(() => {
-    document.title = article ? `${article.title} — Quatréa Journal` : "Story not found — Quatréa";
-    return () => { document.title = "Quatréa — A year, bottled four ways"; };
-  }, [article]);
 
   if (!article) {
     return <main className="page container"><h1 className="h1">A page from another notebook.</h1><Link to="/journal" className="link">Back to the journal</Link></main>;

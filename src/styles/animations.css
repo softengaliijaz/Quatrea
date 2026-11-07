@@ -88,8 +88,8 @@
 }
 
 .btn-ghost:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--summer) 78%, var(--contrast-ink));
-  background-color: color-mix(in srgb, var(--summer) 78%, var(--contrast-ink));
+  border-color: color-mix(in srgb, var(--season, var(--scene, var(--summer))) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--season, var(--scene, var(--summer))) 58%, var(--contrast-ink));
   color: var(--pure-white);
 }
 
@@ -230,12 +230,18 @@
 
   .scent-note-button:hover {
     border-color: var(--c);
-    background-color: color-mix(in srgb, var(--c) 20%, transparent);
+    background-color: color-mix(in srgb, var(--c) 14%, transparent);
   }
 
   .scent-note-button.chip.on:hover {
-    border-color: var(--c);
+    border-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
     background-color: color-mix(in srgb, var(--c) 55%, var(--contrast-ink));
+  }
+
+  .story-rail li:not(.on) .rail-season-button:hover {
+    border-color: color-mix(in srgb, var(--c) 45%, transparent);
+    background-color: color-mix(in srgb, var(--c) 14%, transparent);
+    color: var(--ink);
   }
 
   .footer a:hover,

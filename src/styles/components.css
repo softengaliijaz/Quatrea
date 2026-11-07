@@ -38,6 +38,8 @@ select:disabled {
 
 .btn {
   @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-summer bg-summer px-[1.6rem] py-[0.85rem] font-body text-[0.95rem] font-medium text-pure-white transition-[transform,opacity,background,color] duration-[250ms];
+  border-color: color-mix(in srgb, var(--season, var(--scene, var(--summer))) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--season, var(--scene, var(--summer))) 58%, var(--contrast-ink));
 }
 
 .btn:disabled {
@@ -50,6 +52,8 @@ select:disabled {
 
 .btn-ghost {
   @apply border-summer bg-summer text-pure-white;
+  border-color: color-mix(in srgb, var(--season, var(--scene, var(--summer))) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--season, var(--scene, var(--summer))) 58%, var(--contrast-ink));
 }
 
 .btn-season {
@@ -63,7 +67,7 @@ select:disabled {
 }
 
 button.link {
-  @apply rounded-full bg-brand px-3 py-2 text-pure-white no-underline;
+  @apply rounded-full bg-brand px-3 py-2 text-brand-ink no-underline;
 }
 
 .link.danger {
@@ -72,6 +76,7 @@ button.link {
 
 button.link.danger {
   @apply bg-danger text-pure-white;
+  background-color: color-mix(in srgb, var(--danger) 58%, var(--contrast-ink));
 }
 
 .icon-btn {
@@ -165,6 +170,16 @@ textarea.input {
   border-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
   background-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
   color: var(--pure-white);
+}
+
+.story-copy .scent-notes .scent-note-button:not(.on) {
+  border-color: color-mix(in srgb, var(--c) 45%, transparent);
+  background-color: transparent;
+  color: var(--ink);
+}
+
+.story-copy .scent-notes .scent-note-button:not(.on) * {
+  color: var(--ink);
 }
 
 .story-text + .chips:not(.scent-notes) li,
@@ -400,7 +415,7 @@ textarea.input {
 }
 
 .rail-season-button {
-  @apply flex min-h-11 cursor-pointer items-center gap-[0.7rem] rounded-full border-0 bg-brand px-3 py-1 text-left text-pure-white transition-[color,transform] duration-300;
+  @apply flex min-h-11 cursor-pointer items-center gap-[0.7rem] rounded-full border border-transparent bg-transparent px-3 py-1 text-left text-ink transition-[color,background-color,border-color,transform] duration-300;
 }
 
 .rail-season-button:focus-visible {
@@ -412,7 +427,14 @@ textarea.input {
 }
 
 .story-rail li.on .rail-season-button {
-  @apply font-medium;
+  @apply font-medium text-pure-white;
+  border-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
+}
+
+#year .story-rail li:not(.on) .rail-season-button,
+#year .story-rail li:not(.on) .rail-season-button * {
+  color: var(--ink);
 }
 
 .story-rail li.on .rail-dot {
@@ -610,7 +632,7 @@ textarea.input {
 }
 
 .qty button {
-  @apply h-9 w-9 cursor-pointer border-0 bg-brand text-[1.1rem] text-pure-white;
+  @apply h-9 w-9 cursor-pointer border-0 bg-brand text-[1.1rem] text-brand-ink;
 }
 
 .qty span {
@@ -816,6 +838,14 @@ address {
 
   .detail-grid {
     @apply gap-6;
+  }
+
+  .pyramid > div {
+    @apply grid-cols-[minmax(0,1fr)] items-start gap-2;
+  }
+
+  .pyramid dd {
+    min-width: 0;
   }
 
   .cart-list li {
