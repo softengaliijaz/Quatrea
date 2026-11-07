@@ -3,6 +3,7 @@ import rateLimit from "express-rate-limit";
 import {
   register,
   login,
+  adminLogin,
   refresh,
   logout,
   me,
@@ -36,7 +37,14 @@ const router = Router();
 
 router.post("/register", limiter, registerRules, validate, register);
 router.post("/login", limiter, loginRules, validate, login);
-router.post("/forgot-password", resetLimiter, emailRules, validate, forgotPassword);
+router.post("/admin/login", limiter, loginRules, validate, adminLogin);
+router.post(
+  "/forgot-password",
+  resetLimiter,
+  emailRules,
+  validate,
+  forgotPassword,
+);
 router.post(
   "/reset-password",
   resetLimiter,

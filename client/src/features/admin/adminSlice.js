@@ -21,15 +21,20 @@ export const deleteUser = makeThunk(
 
 const adminSlice = createSlice({
   name: "admin",
-  initialState: { stats: null, users: [], status: "idle" },
+  initialState: { stats: null, users: [], status: "idle", error: null },
   reducers: {},
   extraReducers: (b) => {
     b.addCase(fetchStats.pending, (s) => {
       s.status = "loading";
+      s.error = null;
     })
       .addCase(fetchStats.fulfilled, (s, a) => {
         s.status = "succeeded";
         s.stats = a.payload.stats;
+      })
+      .addCase(fetchStats.rejected, (s, a) => {
+        s.status = "failed";
+        s.error = a.payload || "Unable to load dashboard statistics";
       })
       .addCase(fetchUsers.fulfilled, (s, a) => {
         s.users = a.payload.items;

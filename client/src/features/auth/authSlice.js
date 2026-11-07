@@ -10,6 +10,10 @@ export const loginUser = makeThunk(
   "auth/login",
   async (body) => (await api.post("/auth/login", body)).data,
 );
+export const adminLogin = makeThunk(
+  "auth/adminLogin",
+  async (body) => (await api.post("/auth/admin/login", body)).data,
+);
 export const requestPasswordReset = makeThunk(
   "auth/forgotPassword",
   async (body) => (await api.post("/auth/forgot-password", body)).data,
@@ -114,6 +118,9 @@ const authSlice = createSlice({
       .addCase(loginUser.pending, pending)
       .addCase(loginUser.fulfilled, signedIn)
       .addCase(loginUser.rejected, rejected)
+      .addCase(adminLogin.pending, pending)
+      .addCase(adminLogin.fulfilled, signedIn)
+      .addCase(adminLogin.rejected, rejected)
       .addCase(logoutUser.rejected, (s) => {
         s.user = null;
         s.accessToken = null;

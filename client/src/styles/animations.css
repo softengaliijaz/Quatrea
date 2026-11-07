@@ -1,0 +1,175 @@
+.loader-dot {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.skeleton {
+  @apply bg-[linear-gradient(100deg,var(--line)_30%,var(--surface)_50%,var(--line)_70%)];
+  background-size: 300% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.nav {
+  backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+
+.hero-wash {
+  background:
+    radial-gradient(
+      60% 50% at 20% 20%,
+      color-mix(in srgb, var(--spring) 28%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      50% 50% at 85% 25%,
+      color-mix(in srgb, var(--summer) 24%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      60% 50% at 80% 85%,
+      color-mix(in srgb, var(--autumn) 22%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      50% 50% at 15% 85%,
+      color-mix(in srgb, var(--winter) 28%, transparent),
+      transparent
+    );
+}
+
+.story-sticky {
+  background-color: color-mix(in srgb, var(--season) 24%, var(--bg));
+  transition: background-color 0.9s var(--ease);
+}
+
+.story-season {
+  color: color-mix(in srgb, var(--season) 70%, var(--ink));
+}
+
+.story-halo {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--season) 70%, transparent),
+    transparent 68%
+  );
+}
+
+.mote {
+  background: color-mix(in srgb, var(--season) 70%, transparent);
+  animation: fall linear infinite;
+  transition:
+    background 0.8s,
+    border-radius 0.8s;
+}
+
+[data-season="summer"] .mote {
+  background: transparent;
+  border: 1.5px solid var(--season);
+  animation-name: rise;
+}
+
+[data-season="autumn"] .mote {
+  animation-name: sway;
+}
+
+[data-season="winter"] .mote {
+  background: var(--pure-white);
+}
+
+.strip-card {
+  background: color-mix(in srgb, var(--season) 20%, var(--surface));
+  border-color: color-mix(in srgb, var(--season) 40%, var(--line));
+  transition: transform 0.4s var(--ease);
+}
+
+.pcard-art {
+  background:
+    radial-gradient(
+      circle at 50% 60%,
+      color-mix(in srgb, var(--season) 45%, transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--season) 12%, var(--surface));
+}
+
+.pcard-season {
+  color: color-mix(in srgb, var(--season) 60%, var(--ink));
+}
+
+.wish {
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+}
+
+.chip.on {
+  background-color: var(--c, var(--brand));
+}
+
+.story-rail li.on .rail-dot {
+  background-color: var(--c);
+}
+
+.detail {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--season) 16%, var(--bg)),
+    var(--bg) 60%
+  );
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(115vh) rotate(260deg);
+  }
+}
+
+@keyframes sway {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(40px, 60vh) rotate(160deg);
+  }
+  100% {
+    transform: translate(-20px, 115vh) rotate(320deg);
+  }
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(-115vh) scale(1.4);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .mote {
+    display: none;
+  }
+}

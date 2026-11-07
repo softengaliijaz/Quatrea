@@ -16,6 +16,8 @@ export const getStats = asyncHandler(async (req, res) => {
     revenueAgg,
     byStatus,
     lowStock,
+    recentOrders,
+    recentCustomers,
   ] = await Promise.all([
     User.countDocuments(),
     Perfume.countDocuments(),
@@ -28,6 +30,15 @@ export const getStats = asyncHandler(async (req, res) => {
     ]),
     Order.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
     Perfume.find({ stock: { $lte: 10 } }).select("name stock season"),
+    Order.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("total status createdAt user")
+      .populate("user", "name"),
+    User.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("name email createdAt"),
   ]);
   res.json({
     success: true,
@@ -40,6 +51,8 @@ export const getStats = asyncHandler(async (req, res) => {
       revenue: revenueAgg[0]?.total || 0,
       ordersByStatus: Object.fromEntries(byStatus.map((s) => [s._id, s.count])),
       lowStock,
+      recentOrders,
+      recentCustomers,
     },
   });
 });

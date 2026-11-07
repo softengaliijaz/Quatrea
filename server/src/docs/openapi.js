@@ -90,6 +90,9 @@ const openapi = {
     "/auth/login": {
       post: auth("Sign in and start a session", "LoginRequest"),
     },
+    "/auth/admin/login": {
+      post: auth("Sign in as an administrator", "LoginRequest"),
+    },
     "/auth/refresh": {
       post: auth("Rotate the refresh cookie and issue an access token"),
     },

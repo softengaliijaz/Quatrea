@@ -9,11 +9,14 @@ quatrea/
 │   └── src/
 │       ├── api/            axios instance + silent token refresh
 │       ├── app/            Redux store
-│       ├── features/       slices: auth, perfumes, reviews, cart, orders, contact, admin, theme
+│       ├── features/
+│       │   ├── public/       storefront pages and public-only components
+│       │   ├── admin/        admin pages, components, and state
+│       │   ├── auth/         authentication state and route guards
+│       │   └── ...           perfumes, reviews, cart, orders, contact, theme
+│       ├── layouts/          PublicLayout, AdminLayout, AuthLayout
 │       ├── hooks/          useAuth, useTheme, useShop, useSmoothScroll, useDebounce
-│       ├── components/     layout/, ui/, home/ (scroll sections), admin/
-│       ├── pages/          Home, Collection, PerfumeDetail, About, Contact, Login, Register,
-│       │                   Cart, Orders, OrderDetail, Account, Admin, NotFound
+│       ├── components/     shared UI components
 │       ├── constants/      season copy and colours
 │       └── styles/         design tokens, light/dark themes, responsive rules
 └── server/            Node + Express + MongoDB (MVC)
@@ -43,12 +46,17 @@ npm run dev                   # http://localhost:5173  (proxies /api to the serv
 Seeded accounts: `admin@quatrea.com / Admin@12345` and `demo@quatrea.com / Demo@12345`.
 The seed command is additive and idempotent: it does not delete existing users, orders, carts, or reviews. Existing seed accounts are left unchanged.
 
+## Frontend styling
+
+The client uses Tailwind CSS v4 through its Vite plugin. `client/src/styles/index.css` is the styling entry point; theme tokens and light/dark values live in `variables.css`, base rules in `globals.css`, reusable Tailwind-backed component patterns and responsive rules in `components.css`, and keyframes/complex motion effects in `animations.css`. Seasonal accents and theme colors are CSS variables exposed as Tailwind colors, so dynamic product/season styling and both themes share the same palette.
+
 ## Authentication and authorization
 
 - Register/login return a 15-minute **access token** (kept in Redux memory) and set a 7-day **refresh token** in an httpOnly cookie.
 - The refresh token is rotated on every use and stored hashed (SHA-256) on the user.
 - The axios interceptor refreshes silently on a 401 and retries the request; the session is restored on page load.
-- `protect` checks the token, `authorize('admin')` restricts routes by role. The client mirrors this with `ProtectedRoute`.
+- `/admin/login` uses a backend-verified admin-only login endpoint. Admin pages render under `AdminLayout`; public pages use `PublicLayout`, and authentication uses `AuthLayout`.
+- `protect` checks the token, `authorize('admin')` restricts admin APIs, and the client `AdminRoute` restores the session before checking the role.
 - Passwords are hashed with bcrypt (12 rounds). Helmet, CORS allow-list, rate limiting on auth, and express-validator on every input.
 - Password reset uses a single-use, hashed token that expires after 15 minutes. Configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, and `MAIL_FROM` to enable delivery. Reset requests return a generic response whether or not an account exists.
 - Production startup rejects missing or short JWT signing secrets. Use separate random secrets of at least 32 characters.
@@ -57,7 +65,7 @@ The seed command is additive and idempotent: it does not delete existing users, 
 
 | Area       | Endpoints                                                                                                                                                                          |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Auth       | `POST /auth/register` · `POST /auth/login` · `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me` · `POST /auth/forgot-password` · `POST /auth/reset-password` |
+| Auth       | `POST /auth/register` · `POST /auth/login` · `POST /auth/admin/login` · `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me` · `POST /auth/forgot-password` · `POST /auth/reset-password` |
 | Users      | `PUT /users/me` · `PUT /users/me/password` · `GET /users/me/wishlist` · `POST /users/me/wishlist/:perfumeId` · admin: `GET /users` · `PATCH /users/:id/role` · `DELETE /users/:id` |
 | Perfumes   | `GET /perfumes` (season, search, sort, price, page) · `GET /perfumes/:slug` · admin: `POST /perfumes` · `PUT /perfumes/:id` · `DELETE /perfumes/:id`                               |
 | Reviews    | `GET /perfumes/:perfumeId/reviews` · `POST /perfumes/:perfumeId/reviews` · `DELETE /reviews/:id`                                                                                   |

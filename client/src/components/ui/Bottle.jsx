@@ -2,7 +2,7 @@ import { useId } from "react";
 
 // Illustrated bottle, tinted with the fragrance's season colour.
 export default function Bottle({
-  color = "#7C6BC4",
+  color = "var(--brand)",
   name = "",
   height = 300,
   className = "",
@@ -32,8 +32,8 @@ export default function Bottle({
           />
         </linearGradient>
         <linearGradient id={`s${id}`} x1="0" x2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity=".6" />
-          <stop offset=".45" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0" stopColor="var(--pure-white)" stopOpacity=".6" />
+          <stop offset=".45" stopColor="var(--pure-white)" stopOpacity="0" />
         </linearGradient>
       </defs>
       <rect x="44" y="6" width="32" height="32" rx="5" fill="var(--ink)" />

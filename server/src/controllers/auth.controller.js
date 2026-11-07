@@ -40,14 +40,30 @@ export const register = asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, user: user.toPublic(), accessToken });
 });
 
-// POST /api/auth/login
-export const login = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+const authenticate = async ({ email, password }, requiredRole) => {
   const user = await User.findOne({ email }).select("+password +refreshToken");
   if (!user || !(await user.matchPassword(password)))
     throw new ApiError(401, "Incorrect email or password");
+  if (requiredRole && user.role !== requiredRole)
+    throw new ApiError(401, "Incorrect email or password");
+  return user;
+};
+
+const startSession = async (user, res) => {
   const accessToken = await issueTokens(user, res);
-  res.json({ success: true, user: user.toPublic(), accessToken });
+  return { success: true, user: user.toPublic(), accessToken };
+};
+
+// POST /api/auth/login
+export const login = asyncHandler(async (req, res) => {
+  const user = await authenticate(req.body);
+  res.json(await startSession(user, res));
+});
+
+// POST /api/auth/admin/login
+export const adminLogin = asyncHandler(async (req, res) => {
+  const user = await authenticate(req.body, "admin");
+  res.json(await startSession(user, res));
 });
 
 // POST /api/auth/refresh  (rotates the httpOnly refresh cookie)
