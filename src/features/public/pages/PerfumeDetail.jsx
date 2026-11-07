@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
@@ -22,6 +22,11 @@ export default function PerfumeDetail() {
   const p = useSelector((state) => perfumeBySlug[slug]);
   const { add, wish, isWished } = useShop();
   const [qty, setQty] = useState(1);
+  const [selectedNote, setSelectedNote] = useState(null);
+
+  useEffect(() => {
+    setSelectedNote(null);
+  }, [slug]);
 
   if (!p)
     return (
@@ -35,6 +40,7 @@ export default function PerfumeDetail() {
       </main>
     );
   const color = p.accent || seasonByKey[p.season]?.color;
+  const season = seasonByKey[p.season];
   const wished = isWished(p._id);
 
   return (
@@ -47,7 +53,7 @@ export default function PerfumeDetail() {
             animate={{ y: 0, opacity: 1, rotate: 0 }}
             transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1], delay: 0.4 }}
           >
-            <Bottle color={color} name={p.name} height={440} />
+            <Bottle color={selectedNote?.color || color} name={p.name} height={440} />
           </motion.div>
         </div>
 
@@ -72,7 +78,31 @@ export default function PerfumeDetail() {
                   {title}
                   <span className="muted small">{hint}</span>
                 </dt>
-                <dd>{p.notes?.[key]?.join(", ")}</dd>
+                <dd>
+                  <div
+                    className="detail-note-options"
+                    role="group"
+                    aria-label={`${title} fragrance notes`}
+                  >
+                    {(p.notes?.[key] || []).map((note) => {
+                      const noteColor = season?.noteColors?.[i] || color;
+                      const noteTextColor = season?.noteTextColors?.[i] || "var(--contrast-ink)";
+                      const isSelected = selectedNote?.label === note;
+                      return (
+                        <button
+                          key={note}
+                          type="button"
+                          className={`chip detail-note-button ${isSelected ? "on" : ""}`}
+                          style={{ "--c": noteColor, "--note-ink": noteTextColor }}
+                          onClick={() => setSelectedNote({ label: note, color: noteColor })}
+                          aria-pressed={isSelected}
+                        >
+                          {note}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </dd>
               </motion.div>
             ))}
           </dl>

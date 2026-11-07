@@ -48,6 +48,7 @@ export default function Collection() {
           <button
             className={`chip ${season === "" ? "on" : ""}`}
             onClick={() => setSeason("")}
+            aria-pressed={season === ""}
           >
             All seasons
           </button>
@@ -57,6 +58,7 @@ export default function Collection() {
               className={`chip ${season === s.key ? "on" : ""}`}
               style={{ "--c": s.color }}
               onClick={() => setSeason(s.key)}
+              aria-pressed={season === s.key}
             >
               {s.name}
             </button>

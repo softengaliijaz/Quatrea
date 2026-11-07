@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { EXPLORE_LINKS } from "../../../../constants/navigation";
 
 export default function Footer() {
   const [subscribed, setSubscribed] = useState(false);
@@ -16,36 +17,19 @@ export default function Footer() {
         <div>
           <h3>Explore</h3>
           <ul>
-            <li>
-              <Link to="/collection">The collection</Link>
-            </li>
-            <li>
-              <Link to="/discover">Find your scent</Link>
-            </li>
-            <li>
-              <Link to="/journal">The journal</Link>
-            </li>
-            <li>
-              <Link to="/lab">Layering lab</Link>
-            </li>
-            <li>
-              <Link to="/atlas">Notes atlas</Link>
-            </li>
-            <li>
-              <Link to="/atelier">The atelier</Link>
-            </li>
-            <li>
-              <Link to="/gifts">Gift finder</Link>
-            </li>
-            <li>
-              <Link to="/stores">Our places</Link>
-            </li>
-            <li>
-              <Link to="/about">The house</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
+            {EXPLORE_LINKS.map((link) => (
+              <li key={link.to}>
+                <Link to={link.to}>{link.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Visit</h3>
+          <ul>
+            <li><Link to="/stores">Our places</Link></li>
+            <li><Link to="/about">The house</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
           </ul>
         </div>
         <div className="newsletter">

@@ -8,6 +8,8 @@ export const SEASONS = [
     headline: "The first warm morning after the rain.",
     text: "Green tea and pear blossom open the day. Peony and lily of the valley follow, then white musk settles like linen drying in the sun.",
     notes: ["Green tea", "Peony", "White musk"],
+    noteColors: ["var(--note-green-tea)", "var(--note-peony)", "var(--note-white-musk)"],
+    noteTextColors: ["var(--contrast-ink)", "var(--contrast-ink)", "var(--contrast-ink)"],
   },
   {
     key: "summer",
@@ -18,6 +20,8 @@ export const SEASONS = [
     headline: "Noon on the water, nothing left to do.",
     text: "Bergamot and sea salt meet neroli and frangipani. The dry-down is sun-bleached driftwood and a soft vanilla that lasts until evening.",
     notes: ["Bergamot", "Frangipani", "Driftwood"],
+    noteColors: ["var(--note-bergamot)", "var(--note-frangipani)", "var(--note-driftwood)"],
+    noteTextColors: ["var(--contrast-ink)", "var(--contrast-ink)", "var(--contrast-ink)"],
   },
   {
     key: "autumn",
@@ -28,6 +32,8 @@ export const SEASONS = [
     headline: "Dark fruit, warm wood, the last evening outside.",
     text: "Black currant and fig leaf lead into red grape and rose. Oud and patchouli make the base deeper with every hour.",
     notes: ["Black currant", "Red grape", "Oud"],
+    noteColors: ["var(--note-black-currant)", "var(--note-red-grape)", "var(--note-oud)"],
+    noteTextColors: ["var(--pure-white)", "var(--pure-white)", "var(--pure-white)"],
   },
   {
     key: "winter",
@@ -38,6 +44,8 @@ export const SEASONS = [
     headline: "Cold air, warm skin, a quiet room.",
     text: "Juniper and pink pepper sparkle over iris and frosted violet. Amber and sandalwood melt in last, the feeling of stepping indoors.",
     notes: ["Juniper", "Iris", "Amber"],
+    noteColors: ["var(--note-juniper)", "var(--note-iris)", "var(--note-amber)"],
+    noteTextColors: ["var(--pure-white)", "var(--contrast-ink)", "var(--contrast-ink)"],
   },
 ];
 export const seasonByKey = Object.fromEntries(SEASONS.map((s) => [s.key, s]));

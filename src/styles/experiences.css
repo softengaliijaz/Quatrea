@@ -3,15 +3,19 @@
 }
 
 .nav-more summary {
-  @apply relative flex min-h-11 cursor-pointer list-none items-center text-[0.95rem] text-muted transition-colors duration-200;
+  @apply relative flex min-h-11 cursor-pointer list-none items-center gap-2 text-[0.95rem] leading-none text-muted transition-colors duration-200;
 }
 
 .nav-more summary::-webkit-details-marker {
   display: none;
 }
 
-.nav-more summary span {
-  @apply ml-1 text-[0.72rem];
+.nav-more .nav-chevron {
+  @apply h-[6px] w-[6px] rotate-45 border-r border-b border-current transition-transform duration-200;
+}
+
+.nav-more[open] .nav-chevron {
+  @apply rotate-[225deg];
 }
 
 .nav-more[open] summary {
@@ -352,7 +356,7 @@
 }
 
 .atlas-pin {
-  @apply absolute z-[2] grid -translate-x-1/2 -translate-y-1/2 justify-items-center gap-1 border-0 bg-transparent text-muted;
+  @apply absolute z-[2] grid -translate-x-1/2 -translate-y-1/2 justify-items-center gap-1 border-0 bg-transparent text-pure-white;
   animation: pin-arrive 480ms var(--ease) backwards;
   animation-delay: calc(var(--index) * 22ms);
 }
@@ -367,7 +371,7 @@
 }
 
 .atlas-pin-name {
-  @apply rounded-full bg-surface/90 px-2 py-1 text-[0.7rem] shadow-sm;
+  @apply rounded-full bg-brand px-2 py-1 text-[0.7rem] text-pure-white shadow-sm;
 }
 
 .atlas-map-caption {
@@ -759,15 +763,16 @@
 }
 
 .gift-option {
-  @apply grid min-h-[116px] grid-cols-[32px_1fr] content-center gap-x-3 rounded-[14px] border border-line bg-bg p-4 text-left transition-[border-color,background,transform];
+  @apply grid min-h-[116px] grid-cols-[32px_1fr] content-center gap-x-3 rounded-[14px] border border-brand bg-brand p-4 text-left text-pure-white transition-[border-color,background,transform];
 }
 
 .gift-option.selected {
-  @apply border-brand bg-brand/5;
+  border-color: color-mix(in srgb, var(--option-season, var(--summer)) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--option-season, var(--summer)) 58%, var(--contrast-ink));
 }
 
 .gift-option > span {
-  @apply row-span-2 self-start pt-1 font-body text-[0.68rem] text-brand;
+  @apply row-span-2 self-start pt-1 font-body text-[0.68rem] text-pure-white;
 }
 
 .gift-option strong {
@@ -896,7 +901,7 @@
 }
 
 .store-pin small {
-  @apply rounded-full bg-surface px-2 py-1 text-[0.68rem] shadow-sm;
+  @apply rounded-full bg-brand px-2 py-1 text-[0.68rem] text-pure-white shadow-sm;
 }
 
 .map-caption {
@@ -912,7 +917,7 @@
 }
 
 .store-row {
-  @apply flex min-h-[70px] items-center gap-4 border-b border-line bg-transparent text-left transition-[transform,border-color];
+  @apply flex min-h-[70px] items-center gap-4 rounded-[10px] border border-brand bg-brand px-3 text-left text-pure-white transition-[transform,border-color];
 }
 
 .store-row-index {
@@ -1156,12 +1161,11 @@
 
 @media (width > 56.25rem) {
   .footer-grid {
-    grid-template-columns: 1fr 1.45fr 1fr;
+    grid-template-columns: 1fr 0.7fr 0.7fr 1fr;
   }
 
   .footer-grid > div:nth-child(2) ul {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1243,7 +1247,7 @@
 }
 
 .hero-scene-picker button {
-  @apply flex min-h-9 items-center gap-2 rounded-full border border-transparent bg-transparent px-2 text-[0.7rem] text-muted transition-[border-color,color];
+  @apply flex min-h-9 items-center gap-2 rounded-full border border-brand bg-brand px-3 text-[0.7rem] text-pure-white transition-[border-color,color];
 }
 
 .hero-scene-picker button i {
@@ -1251,15 +1255,15 @@
 }
 
 .hero-scene-picker button.active {
-  @apply border-line text-ink;
+  @apply border-summer bg-summer text-pure-white;
 }
 
 .hero-sound {
-  @apply relative z-[2] mt-1 inline-flex min-h-11 items-center gap-2 rounded-full border-0 bg-transparent px-3 text-[0.68rem] text-muted transition-colors;
+  @apply relative z-[2] mt-1 inline-flex min-h-11 items-center gap-2 rounded-full border-0 bg-brand px-3 text-[0.68rem] text-pure-white transition-colors;
 }
 
 .hero-sound.active {
-  @apply text-brand;
+  @apply bg-summer text-pure-white;
 }
 
 .intro-bloom {
@@ -1284,7 +1288,7 @@
 }
 
 .intro-bloom > button {
-  @apply absolute bottom-8 min-h-11 rounded-full border border-line bg-transparent px-4 text-[0.8rem] text-muted;
+  @apply absolute bottom-8 min-h-11 rounded-full border border-brand bg-brand px-4 text-[0.8rem] text-pure-white;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1521,4 +1525,9 @@
   .store-pin > span {
     transition-duration: 0.01ms;
   }
+}
+
+button:not(.icon-btn):not(.wish):not(.drawer-backdrop),
+button:not(.icon-btn):not(.wish):not(.drawer-backdrop) * {
+  color: var(--pure-white);
 }

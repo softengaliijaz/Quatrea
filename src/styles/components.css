@@ -37,7 +37,7 @@ select:disabled {
 }
 
 .btn {
-  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-brand bg-brand px-[1.6rem] py-[0.85rem] font-body text-[0.95rem] font-medium text-brand-ink transition-[transform,opacity,background,color] duration-[250ms];
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-summer bg-summer px-[1.6rem] py-[0.85rem] font-body text-[0.95rem] font-medium text-pure-white transition-[transform,opacity,background,color] duration-[250ms];
 }
 
 .btn:disabled {
@@ -49,19 +49,29 @@ select:disabled {
 }
 
 .btn-ghost {
-  @apply border-line bg-transparent text-ink;
+  @apply border-summer bg-summer text-pure-white;
 }
 
 .btn-season {
-  @apply border-[var(--season)] bg-[var(--season)] text-contrast-ink;
+  border-color: color-mix(in srgb, var(--season) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--season) 58%, var(--contrast-ink));
+  color: var(--pure-white);
 }
 
 .link {
   @apply cursor-pointer border-0 bg-transparent p-0 [font-family:inherit] text-brand underline decoration-1 underline-offset-[3px];
 }
 
+button.link {
+  @apply rounded-full bg-brand px-3 py-2 text-pure-white no-underline;
+}
+
 .link.danger {
   @apply text-danger;
+}
+
+button.link.danger {
+  @apply bg-danger text-pure-white;
 }
 
 .icon-btn {
@@ -133,15 +143,32 @@ textarea.input {
 }
 
 .chip {
-  @apply cursor-pointer rounded-full border border-line bg-transparent px-4 py-[0.45rem] [font-family:inherit] text-[0.9rem] text-ink transition-all duration-200;
+  @apply cursor-pointer rounded-full border border-brand bg-brand px-4 py-[0.45rem] [font-family:inherit] text-[0.9rem] text-pure-white transition-all duration-200;
 }
 
 .chip.on {
-  @apply border-[var(--c,var(--brand))] bg-[var(--c,var(--brand))] text-contrast-ink;
+  border-color: color-mix(in srgb, var(--c, var(--summer)) 55%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--c, var(--summer)) 55%, var(--contrast-ink));
+  color: var(--pure-white);
 }
 
-.story-text + .chips li,
-.chips li:not(.chip) {
+.story-copy .scent-notes li {
+  @apply border-0 p-0;
+}
+
+.scent-note-button {
+  @apply min-h-11 cursor-pointer transition-[background-color,border-color,color,transform];
+  transition-duration: 250ms;
+}
+
+.scent-note-button.chip.on {
+  border-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
+  color: var(--pure-white);
+}
+
+.story-text + .chips:not(.scent-notes) li,
+.chips li:not(.chip):not(:has(.scent-note-button)) {
   @apply rounded-full border border-ink/25 px-[0.85rem] py-[0.35rem] text-[0.88rem];
 }
 
@@ -204,19 +231,19 @@ textarea.input {
 }
 
 .nav-inner {
-  @apply flex h-[68px] items-center justify-between gap-4;
+  @apply grid h-[68px] grid-cols-[1fr_auto_1fr] items-center gap-4;
 }
 
 .logo {
-  @apply flex items-center gap-[0.6rem] font-display text-[1.7rem] font-semibold;
+  @apply flex items-center justify-self-start gap-[0.6rem] font-display text-[1.7rem] font-semibold;
 }
 
 .nav-links {
-  @apply flex gap-8;
+  @apply flex items-center justify-self-center gap-8;
 }
 
 .nav-links a {
-  @apply relative text-[0.95rem] text-muted transition-colors duration-200;
+  @apply relative flex min-h-11 items-center text-[0.95rem] leading-none text-muted transition-colors duration-200;
 }
 
 .nav-links a.active {
@@ -228,7 +255,7 @@ textarea.input {
 }
 
 .nav-actions {
-  @apply flex items-center gap-1;
+  @apply flex items-center justify-self-end gap-1;
 }
 
 .badge-count {
@@ -305,7 +332,7 @@ textarea.input {
 }
 
 .bottle-stop {
-  transition: stop-color 0.8s;
+  transition: stop-color 0.8s var(--ease);
 }
 
 .story {
@@ -358,15 +385,27 @@ textarea.input {
 }
 
 .story-rail li {
-  @apply flex items-center gap-[0.7rem] text-[0.85rem] text-muted;
+  @apply text-[0.85rem] text-muted;
 }
 
 .story-rail li.on {
   @apply text-ink;
 }
 
+.rail-season-button {
+  @apply flex min-h-11 cursor-pointer items-center gap-[0.7rem] rounded-full border-0 bg-brand px-3 py-1 text-left text-pure-white transition-[color,transform] duration-300;
+}
+
+.rail-season-button:focus-visible {
+  @apply rounded-md outline-2 outline-offset-4 outline-brand;
+}
+
 .rail-dot {
-  @apply h-[10px] w-[10px] rounded-full border-2 border-[var(--c)] transition-all duration-500;
+  @apply h-[10px] w-[10px] flex-none rounded-full border-2 border-[var(--c)] transition-all duration-500;
+}
+
+.story-rail li.on .rail-season-button {
+  @apply font-medium;
 }
 
 .story-rail li.on .rail-dot {
@@ -536,6 +575,21 @@ textarea.input {
   @apply m-0 font-display text-[1.25rem] font-normal;
 }
 
+.detail-note-options {
+  @apply flex flex-wrap gap-2;
+}
+
+.detail-note-button {
+  @apply min-h-10 border-line bg-transparent px-3 py-1 text-[0.85rem] text-ink transition-[background-color,border-color,color,transform];
+  transition-duration: 250ms;
+}
+
+.detail-note-button.chip.on {
+  border-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--c) 58%, var(--contrast-ink));
+  color: var(--pure-white);
+}
+
 .buy {
   @apply mt-6 flex flex-wrap items-center gap-4;
 }
@@ -549,7 +603,7 @@ textarea.input {
 }
 
 .qty button {
-  @apply h-9 w-9 cursor-pointer border-0 bg-transparent text-[1.1rem] text-ink;
+  @apply h-9 w-9 cursor-pointer border-0 bg-brand text-[1.1rem] text-pure-white;
 }
 
 .qty span {
@@ -637,7 +691,7 @@ address {
 }
 
 .footer-grid {
-  @apply grid grid-cols-[1.3fr_0.8fr_1.3fr] gap-12;
+  @apply grid grid-cols-[1.3fr_0.7fr_0.7fr_1.3fr] gap-12;
 }
 
 .footer-logo {
@@ -657,6 +711,10 @@ address {
 }
 
 @media (width <= 56.25rem) {
+  .nav-inner {
+    @apply flex justify-between;
+  }
+
   .nav-burger {
     @apply inline-grid;
   }
@@ -707,7 +765,21 @@ address {
   }
 
   .story-rail {
-    @apply hidden;
+    @apply left-1/2 top-3 grid-flow-col -translate-x-1/2 -translate-y-0 gap-1;
+    width: max-content;
+    max-width: 94%;
+  }
+
+  .story-rail li {
+    @apply min-w-0;
+  }
+
+  .rail-season-button {
+    @apply min-h-11 gap-1 px-1 text-[0.7rem];
+  }
+
+  .story-grid {
+    @apply pt-12;
   }
 
   .story-title {
@@ -763,6 +835,14 @@ address {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .rail-season-button:hover {
+    @apply translate-x-1 text-ink;
+  }
+
+  .rail-season-button:hover .rail-dot {
+    @apply scale-125;
+  }
+
   .btn:hover:not(:disabled) {
     @apply -translate-y-0.5;
   }
@@ -1034,11 +1114,12 @@ address {
 }
 
 .finder-option {
-  @apply flex min-h-[86px] min-w-0 items-center gap-3 rounded-[14px] border border-line bg-bg px-3 py-3 text-left transition-[border-color,background,transform] duration-200;
+  @apply flex min-h-[86px] min-w-0 items-center gap-3 rounded-[14px] border border-brand bg-brand px-3 py-3 text-left text-pure-white transition-[border-color,background,transform] duration-200;
 }
 
 .finder-option.selected {
-  @apply border-brand bg-brand/5;
+  border-color: color-mix(in srgb, var(--option-season) 58%, var(--contrast-ink));
+  background-color: color-mix(in srgb, var(--option-season) 58%, var(--contrast-ink));
 }
 
 .finder-option-mark {
@@ -1046,7 +1127,8 @@ address {
 }
 
 .finder-option.selected .finder-option-mark {
-  @apply border-brand text-brand;
+  border-color: var(--pure-white);
+  color: var(--pure-white);
 }
 
 .finder-option-copy {
@@ -1063,6 +1145,11 @@ address {
 
 .finder-option-check {
   @apply ml-auto grid h-5 w-5 flex-none place-items-center rounded-full bg-brand text-[0.7rem] text-brand-ink;
+}
+
+.finder-option.selected .finder-option-check {
+  background-color: var(--contrast-ink);
+  color: var(--pure-white);
 }
 
 .finder-controls {

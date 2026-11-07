@@ -76,7 +76,13 @@ export default function GiftFinder() {
                 <h2>{QUESTIONS[step].title}</h2>
                 <div className="gift-options">
                   {QUESTIONS[step].options.map((option, index) => (
-                    <button className={`gift-option ${selected === option.season ? "selected" : ""}`} key={option.value} onClick={() => pick(option.season)} aria-pressed={selected === option.season}>
+                    <button
+                      className={`gift-option ${selected === option.season ? "selected" : ""}`}
+                      key={option.value}
+                      style={{ "--option-season": seasonByKey[option.season]?.color }}
+                      onClick={() => pick(option.season)}
+                      aria-pressed={selected === option.season}
+                    >
                       <span>0{index + 1}</span><strong>{option.label}</strong><small>{option.hint}</small>
                     </button>
                   ))}

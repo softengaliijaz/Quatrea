@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Icon from "../../../../components/ui/Icon";
 import useTheme from "../../../../hooks/useTheme";
 import { selectCartCount } from "../../../../features/cart/cartSlice";
+import { EXPLORE_LINKS } from "../../../../constants/navigation";
 
 const LINKS = [
   { to: "/", label: "Home", end: true },
@@ -33,29 +34,51 @@ export default function Navbar() {
         <Link to="/" className="logo" aria-label="Quatréa home">
           <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
             <circle cx="9" cy="9" r="7" fill="var(--spring)" />
-            <circle cx="17" cy="9" r="7" fill="var(--summer)" fillOpacity=".9" />
-            <circle cx="9" cy="17" r="7" fill="var(--autumn)" fillOpacity=".9" />
-            <circle cx="17" cy="17" r="7" fill="var(--winter)" fillOpacity=".9" />
+            <circle
+              cx="17"
+              cy="9"
+              r="7"
+              fill="var(--summer)"
+              fillOpacity=".9"
+            />
+            <circle
+              cx="9"
+              cy="17"
+              r="7"
+              fill="var(--autumn)"
+              fillOpacity=".9"
+            />
+            <circle
+              cx="17"
+              cy="17"
+              r="7"
+              fill="var(--winter)"
+              fillOpacity=".9"
+            />
           </svg>
           <span>Quatréa</span>
         </Link>
 
-        <nav ref={navRef} className={`nav-links ${open ? "open" : ""}`} aria-label="Main">
+        <nav
+          ref={navRef}
+          className={`nav-links ${open ? "open" : ""}`}
+          aria-label="Main"
+        >
           {LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} end={l.end}>
               {l.label}
             </NavLink>
           ))}
           <details className="nav-more">
-            <summary>Explore <span aria-hidden="true">⌄</span></summary>
+            <summary>
+              Explore <span className="nav-chevron" aria-hidden="true" />
+            </summary>
             <div className="nav-more-menu">
-              <NavLink to="/lab">Layering lab</NavLink>
-              <NavLink to="/atlas">Notes atlas</NavLink>
-              <NavLink to="/atelier">The atelier</NavLink>
-              <NavLink to="/gifts">Gift finder</NavLink>
-              <NavLink to="/stores">Our places</NavLink>
-              <NavLink to="/about">The house</NavLink>
-              <NavLink to="/contact">Write to us</NavLink>
+              {EXPLORE_LINKS.map((link) => (
+                <NavLink key={link.to} to={link.to}>
+                  {link.label}
+                </NavLink>
+              ))}
             </div>
           </details>
         </nav>
@@ -74,7 +97,9 @@ export default function Navbar() {
             aria-label={`Saved fragrances, ${savedCount} items`}
           >
             <Icon name="heart" />
-            {savedCount > 0 && <span className="badge-count">{savedCount}</span>}
+            {savedCount > 0 && (
+              <span className="badge-count">{savedCount}</span>
+            )}
           </Link>
           <Link
             to="/cart"

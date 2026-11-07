@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Bottle from "../../../components/ui/Bottle";
 import Icon from "../../../components/ui/Icon";
 import { seasonByKey } from "../../../constants/seasons";
@@ -24,6 +24,7 @@ export default function ScentFinder() {
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const { add, wish, isWished } = useShop();
+  const reduceMotion = useReducedMotion();
   const question = QUIZ_QUESTIONS[step];
   const selected = answers[step];
 
@@ -64,16 +65,27 @@ export default function ScentFinder() {
 
   return (
     <main className="finder-page">
-      <header className="finder-intro container">
+      <motion.header
+        className="finder-intro container"
+        initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      >
         <p className="hero-kicker">A small study in what you love</p>
         <h1 className="h1">Find your <em>season.</em></h1>
         <p className="lead muted">
           Five little choices, no wrong answers. Find the season — and the
           fragrance — that feels a little like you.
         </p>
-      </header>
+      </motion.header>
 
-      <section className="finder-shell container" aria-label="Scent finder">
+      <motion.section
+        className="finder-shell container"
+        aria-label="Scent finder"
+        initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.65, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+      >
         <aside className="finder-aside">
           <span className="finder-orbit" aria-hidden="true">
             <span />
@@ -96,7 +108,10 @@ export default function ScentFinder() {
             <span>{showResults ? "05 / 05" : `0${step + 1} / 05`}</span>
           </div>
           <div className="finder-progress-track" aria-hidden="true">
-            <span style={{ width: `${showResults ? 100 : ((step + 1) / QUIZ_QUESTIONS.length) * 100}%` }} />
+            <motion.span
+              animate={{ width: `${showResults ? 100 : ((step + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
+              transition={{ duration: reduceMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
+            />
           </div>
 
           <AnimatePresence mode="wait">
@@ -179,9 +194,19 @@ export default function ScentFinder() {
                 <p className="muted">Choose the answer that feels right, not the one you think you should choose.</p>
                 <div className="finder-options" role="group" aria-label={question.prompt}>
                   {question.options.map((option, optionIndex) => (
-                    <button
+                    <motion.button
                       className={`finder-option ${selected === option.season ? "selected" : ""}`}
                       key={option.label}
+                      type="button"
+                      style={{ "--option-season": seasonByKey[option.season]?.color }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+                      transition={{
+                        duration: reduceMotion ? 0 : 0.3,
+                        delay: reduceMotion ? 0 : optionIndex * 0.055,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
                       onClick={() => choose(option.season)}
                       aria-pressed={selected === option.season}
                     >
@@ -190,8 +215,22 @@ export default function ScentFinder() {
                         <strong>{option.label}</strong>
                         <small>{seasonByKey[option.season]?.name}</small>
                       </span>
-                      <span className="finder-option-check" aria-hidden="true">{selected === option.season ? "✓" : ""}</span>
-                    </button>
+                      <span className="finder-option-check" aria-hidden="true">
+                        <AnimatePresence mode="wait" initial={false}>
+                          {selected === option.season && (
+                            <motion.span
+                              key="selected"
+                              initial={reduceMotion ? false : { scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={reduceMotion ? undefined : { scale: 0, opacity: 0 }}
+                              transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                            >
+                              ✓
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                      </span>
+                    </motion.button>
                   ))}
                 </div>
                 <div className="finder-controls">
@@ -211,7 +250,7 @@ export default function ScentFinder() {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </motion.section>
 
       <p className="finder-disclaimer container">
         A thoughtful place to start, not a rulebook. The best way to know a scent

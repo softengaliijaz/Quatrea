@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AnimatePresence,
@@ -22,20 +22,40 @@ const MOTES = Array.from({ length: 16 }, (_, i) => ({
 export default function SeasonStory() {
   const ref = useRef(null);
   const [idx, setIdx] = useState(0);
+  const [selectedNote, setSelectedNote] = useState(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (!reduceMotion) {
-      setIdx(Math.min(SEASONS.length - 1, Math.floor(v * SEASONS.length)));
-    }
+    setIdx(Math.min(SEASONS.length - 1, Math.floor(v * SEASONS.length)));
   });
   const rotate = useTransform(scrollYProgress, [0, 1], [-10, 10]);
   const bottleY = useTransform(scrollYProgress, [0, 1], [30, -30]);
   const season = SEASONS[idx];
+  const bottleColor = selectedNote?.color || season.color;
   const motes = useMemo(() => MOTES, []);
+
+  useEffect(() => {
+    setSelectedNote(null);
+  }, [idx]);
+  const selectSeason = (index) => {
+    setIdx(index);
+    const section = ref.current;
+    if (!section) return;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    const scrollDistance = section.offsetHeight - window.innerHeight;
+    const target = sectionTop + scrollDistance * ((index + 0.5) / SEASONS.length);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(target, { immediate: reduceMotion });
+    } else {
+      window.scrollTo({
+        top: target,
+        behavior: reduceMotion ? "instant" : "smooth",
+      });
+    }
+  };
 
   return (
     <section
@@ -46,7 +66,7 @@ export default function SeasonStory() {
     >
       <div
         className="story-sticky"
-        style={{ "--season": season.color }}
+        style={{ "--season": season.color, "--bottle-color": bottleColor }}
         data-season={season.key}
       >
         <div className="story-bg" aria-hidden="true">
@@ -67,13 +87,17 @@ export default function SeasonStory() {
 
         <ol className="story-rail" aria-label="Seasons">
           {SEASONS.map((s, i) => (
-            <li
-              key={s.key}
-              className={i === idx ? "on" : ""}
-              style={{ "--c": s.color }}
-            >
-              <span className="rail-dot" />
-              <span className="rail-name">{s.name}</span>
+            <li key={s.key} className={i === idx ? "on" : ""} style={{ "--c": s.color }}>
+              <button
+                type="button"
+                className="rail-season-button"
+                onClick={() => selectSeason(i)}
+                aria-label={`Show ${s.name}: ${s.perfume}`}
+                aria-pressed={i === idx}
+              >
+                <span className="rail-dot" aria-hidden="true" />
+                <span className="rail-name">{s.name}</span>
+              </button>
             </li>
           ))}
         </ol>
@@ -91,14 +115,33 @@ export default function SeasonStory() {
                 <p className="story-season">{season.name}</p>
                 <h2 className="story-title">{season.headline}</h2>
                 <p className="story-text">{season.text}</p>
-                <ul className="chips">
-                  {season.notes.map((n) => (
-                    <li key={n}>{n}</li>
-                  ))}
+                <ul className="chips scent-notes" aria-label={`${season.name} fragrance notes`}>
+                  {season.notes.map((note, noteIndex) => {
+                    const noteColor = season.noteColors[noteIndex];
+                    const noteInk = season.noteTextColors[noteIndex];
+                    const isSelected = selectedNote?.label === note;
+                    return (
+                      <li key={note}>
+                        <button
+                          type="button"
+                          className={`chip scent-note-button ${isSelected ? "on" : ""}`}
+                          style={{
+                            "--c": noteColor,
+                            "--note-ink": noteInk,
+                          }}
+                          onClick={() => setSelectedNote({ label: note, color: noteColor })}
+                          aria-pressed={isSelected}
+                        >
+                          {note}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
                 <Link
                   to={`/collection/${season.slug}`}
                   className="btn btn-season"
+                  style={{ "--season": season.color }}
                 >
                   Meet {season.perfume}
                 </Link>
@@ -107,7 +150,7 @@ export default function SeasonStory() {
           </div>
           <motion.div className="story-art" style={{ rotate: reduceMotion ? 0 : rotate, y: reduceMotion ? 0 : bottleY }}>
             <div className="story-halo" aria-hidden="true" />
-            <Bottle color={season.color} name={season.perfume} height={440} />
+            <Bottle color={bottleColor} name={season.perfume} height={440} />
           </motion.div>
         </div>
       </div>
