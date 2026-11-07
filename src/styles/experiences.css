@@ -4,6 +4,7 @@
 
 .nav-more summary {
   @apply relative flex min-h-11 cursor-pointer list-none items-center gap-2 text-[0.95rem] leading-none text-muted transition-colors duration-200;
+  user-select: none;
 }
 
 .nav-more summary::-webkit-details-marker {
@@ -1292,6 +1293,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .nav-more summary:hover {
+    @apply text-ink;
+  }
+
   .nav-more-menu a:hover,
   .atlas-fragrances a:hover {
     @apply bg-bg text-ink;

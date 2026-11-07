@@ -244,14 +244,21 @@ textarea.input {
 
 .nav-links a {
   @apply relative flex min-h-11 items-center text-[0.95rem] leading-none text-muted transition-colors duration-200;
+  user-select: none;
 }
 
 .nav-links a.active {
   @apply text-ink;
 }
 
-.nav-links a.active::after {
-  @apply absolute -bottom-[6px] left-0 right-0 h-0.5 rounded-sm bg-brand content-[""];
+.nav-links a::after {
+  @apply absolute -bottom-[6px] left-0 right-0 h-0.5 origin-center scale-x-0 rounded-sm bg-brand content-[""];
+  transition: transform 220ms var(--ease);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  @apply scale-x-100;
 }
 
 .nav-actions {
@@ -731,8 +738,8 @@ address {
     @apply border-b border-line py-4 text-[1.1rem];
   }
 
-  .nav-links a.active::after {
-    @apply hidden;
+  .nav-links a::after {
+    @apply bottom-2;
   }
 
   .story-grid,
