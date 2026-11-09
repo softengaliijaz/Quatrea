@@ -3,69 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Meet Quatréa: four seasonal fragrances and a considered collection, imagined in Grasse."
-    />
+    <meta name="description" content="Quatréa is a fictional perfume house with four fragrances, one for each season." />
     <meta name="theme-color" content="#f5f4f8" />
     <meta property="og:title" content="Quatréa — A year, bottled four ways" />
-    <meta
-      property="og:description"
-      content="Meet Quatréa: four seasonal fragrances and a considered collection, imagined in Grasse."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://quatrea-web.vercel.app/" />
-    <meta
-      property="og:image"
-      content="https://quatrea-web.vercel.app/social-card.svg"
-    />
-    <meta
-      property="og:image:alt"
-      content="Quatréa, four fragrances shaped by the seasons"
-    />
-    <meta property="og:site_name" content="Quatréa" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://quatrea-web.vercel.app/" />
-    <link
-      rel="icon"
-      href="/quatrea-mark.svg"
-    />
+    <meta property="og:description" content="Four fragrances, one for each season. Scroll through the year." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <title>Quatréa — A year, bottled four ways</title>
     <script>
-      try {
-        var savedTheme = localStorage.getItem("qt-theme");
-        var t =
-          savedTheme === "light" || savedTheme === "dark"
-            ? savedTheme
-            : matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-        document.documentElement.dataset.theme = t;
-      } catch (e) {
-        console.warn("Could not load the saved color theme.", e);
-      }
+      try { var t = JSON.parse(localStorage.getItem('quatrea:theme')) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = t; } catch (e) {}
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <noscript>
-      <main
-        style="max-width: 42rem; margin: 12vh auto; padding: 2rem; color: #1a1923; font: 1rem/1.6 system-ui, sans-serif;"
-      >
-        <h1 style="font: 500 2.5rem/1.1 Georgia, serif;">Quatréa, a year in scent.</h1>
-        <p>
-          This seasonal fragrance experience needs JavaScript to show its
-          stories and interactive collection. Please enable JavaScript and
-          reload the page.
-        </p>
-      </main>
-    </noscript>
+    <noscript>Quatréa needs JavaScript to run. Please enable it to explore the four seasons.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,6 +1,94 @@
-@import "tailwindcss";
-@import "./variables.css";
-@import "./globals.css";
-@import "./components.css";
-@import "./animations.css";
-@import "./experiences.css";
+@import 'tailwindcss';
+@import './safelist.css';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ---------- Theme tokens (light / dark) ---------- */
+:root {
+  color-scheme: light;
+  --bg: #f5f4f8; --surface: #ffffff; --ink: #1a1923; --muted: #6b6978; --line: #e1dfea;
+  --brand: #4b3f72; --brand-ink: #ffffff; --danger: #b3261e; --shadow: 0 18px 40px -22px rgba(40, 30, 80, 0.35);
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #121117; --surface: #1b1a23; --ink: #efedf5; --muted: #a09db0; --line: #2d2b3a;
+  --brand: #b9acf0; --brand-ink: #15131f; --danger: #ff8a80; --shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.7);
+}
+
+@theme inline {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Jost', system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-danger: var(--danger);
+  --color-spring: #86b98f;
+  --color-summer: #f0b13c;
+  --color-autumn: #a5495a;
+  --color-winter: #8fafd6;
+  --shadow-soft: var(--shadow);
+  --ease-out-expo: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html.lenis, html.lenis body { height: auto; }
+  body { @apply bg-bg text-ink font-sans antialiased overflow-x-hidden transition-colors duration-500; line-height: 1.6; }
+  h1, h2 { @apply font-display font-medium tracking-tight; line-height: 1.05; }
+  h3 { @apply font-sans font-medium; }
+  p { max-width: 68ch; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+  ::selection { background: var(--brand); color: var(--brand-ink); }
+  img, svg { max-width: 100%; }
+}
+
+/* ---------- Reusable utilities and component classes ---------- */
+@utility wrap { margin-inline: auto; width: min(1200px, 92%); }
+
+@layer components {
+  .page { @apply wrap pt-28 pb-20 min-h-[80vh]; }
+  .t-h1 { @apply font-display text-[clamp(2.4rem,6vw,4.4rem)] mb-4; }
+  .t-h2 { @apply font-display text-[clamp(1.9rem,4vw,3rem)] mb-4; }
+  .t-h3 { @apply font-display text-2xl mb-3; }
+  .t-lead { @apply text-xl text-muted; }
+  .t-season { @apply font-display italic text-xl; color: color-mix(in srgb, var(--season, var(--brand)) 65%, var(--ink)); }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full border border-brand bg-brand text-brand-ink px-6 py-3 text-[0.95rem] font-medium cursor-pointer transition duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0; }
+  .btn-sm { @apply px-4 py-2 text-sm; }
+  .btn-ghost { @apply bg-transparent text-ink border-line hover:border-ink; }
+  .btn-season { background: var(--season); border-color: var(--season); color: #17161d; }
+  .link { @apply text-brand underline underline-offset-4 cursor-pointer bg-transparent border-0 p-0; }
+  .icon-btn { @apply relative inline-grid place-items-center size-10 rounded-full border-0 bg-transparent text-ink cursor-pointer transition-colors hover:bg-line; }
+
+  .input { @apply w-full rounded-[10px] border border-line bg-surface text-ink px-4 py-3 transition focus:outline-none focus:border-brand focus:ring-4 focus:ring-brand/20; }
+  .input[aria-invalid='true'] { border-color: var(--danger); }
+  .card { @apply rounded-2xl border border-line bg-surface p-6; }
+  .chip { @apply rounded-full border border-line bg-transparent px-4 py-1.5 text-sm cursor-pointer transition; }
+  .chip-on { background: var(--c, var(--brand)); border-color: var(--c, var(--brand)); color: #17161d; }
+  .tag { @apply rounded-full border border-ink/25 px-3 py-1 text-sm; }
+  .field-error { @apply text-sm text-danger mt-1; }
+  .pill { @apply inline-block rounded-full bg-line px-3 py-0.5 text-xs; }
+}
+
+/* ---------- Season scenes: drifting particles ---------- */
+.mote { position: absolute; top: -10%; background: color-mix(in srgb, var(--season) 70%, transparent); opacity: 0.55; animation: fall linear infinite; transition: background 0.8s, border-radius 0.8s; }
+[data-season='spring'] .mote { border-radius: 100% 0 100% 0; }
+[data-season='summer'] .mote { border-radius: 50%; background: transparent; border: 1.5px solid var(--season); animation-name: rise; top: auto; bottom: -10%; }
+[data-season='autumn'] .mote { border-radius: 0 70% 0 70%; animation-name: sway; }
+[data-season='winter'] .mote { border-radius: 50%; background: #fff; }
+@keyframes fall { to { transform: translateY(115vh) rotate(260deg); } }
+@keyframes sway { 0% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(40px, 60vh) rotate(160deg); } 100% { transform: translate(-20px, 115vh) rotate(320deg); } }
+@keyframes rise { to { transform: translateY(-115vh) scale(1.4); opacity: 0; } }
+
+.bottle-stop { transition: stop-color 0.8s; }
+.shimmer { background: linear-gradient(100deg, var(--line) 30%, var(--surface) 50%, var(--line) 70%); background-size: 300% 100%; animation: shimmer 1.4s infinite; }
+@keyframes shimmer { to { background-position: -100% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .mote { display: none; }
+}
